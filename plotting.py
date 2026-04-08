@@ -56,3 +56,39 @@ def plot_mag_spectrum(complex_signal, num_samples, f_s, signal_name):
     plt.ylabel("Magnitude (dB)")
     plt.grid(True)
     plt.show()
+
+def plot_power_spectrum(complex_signal, num_samples, f_s, signal_name):
+    # FFT
+    s = np.fft.fft(complex_signal)
+    s_shifted = np.fft.fftshift(s)
+
+    # Frequency axis
+    freqs = np.fft.fftfreq(num_samples, 1 / f_s)
+    freqs_shifted = np.fft.fftshift(freqs)
+
+    # Power spectrum
+    power = np.abs(s_shifted) ** 2
+
+    # Convert to dB 
+    power_db = 10 * np.log10(power + 1e-12) # add small epsilon to avoid log(0)
+
+    # Plot
+    plt.figure()
+    plt.plot(freqs_shifted / 1e6, power_db)
+    plt.title(f"{signal_name} Power Spectrum")
+    plt.xlabel("Frequency (MHz)")
+    plt.ylabel("Power (dB)")
+    plt.grid(True)
+    plt.show()
+
+def plot_AM_AM_curve(Pin_dB, Pout_dB):
+    plt.figure()
+    plt.plot(Pin_dB, Pout_dB, 'o-', label="PA Transfer Curve")
+    plt.plot(Pin_dB, Pin_dB, '--', label="Ideal Linear PA")
+
+    plt.xlabel("Input Power (dB)")
+    plt.ylabel("Output Power (dB)")
+    plt.title("PA AM/AM Curve")
+    plt.grid(True)
+    plt.legend()
+    plt.show()

@@ -1,0 +1,322 @@
+<Root>
+    <Administration>
+        <overwrite_xml_file>true</overwrite_xml_file>
+        <watchdog_enable>true</watchdog_enable>
+        <adjuster_by_service>false</adjuster_by_service>
+        <force_alignment>false</force_alignment>
+        <transceiver_id>12</transceiver_id>
+        <imo_number>0</imo_number>
+        <default_access_level>0</default_access_level>
+        <redundant_network_mode>0</redundant_network_mode>
+        <init_rf_board>true</init_rf_board>
+        <logging_mode>6</logging_mode>
+        <ptrt_us>0</ptrt_us>
+        <prf_deviation>0</prf_deviation>
+        <is_adaptive_map_active>true</is_adaptive_map_active>
+        <im_sequence_identifier>0</im_sequence_identifier>
+        <use_p1_0_frontend_control>false</use_p1_0_frontend_control>
+        <use_p1_0_frontend>true</use_p1_0_frontend>
+        <trm_type>1</trm_type>
+        <RedundantNetworkMode>0</RedundantNetworkMode>
+    </Administration>
+    <Arpa>
+        <target_distribution>false</target_distribution>
+        <number_of_targets>100</number_of_targets>
+        <logging>true</logging>
+        <log_all_targets>false</log_all_targets>
+        <log_lost_targets>true</log_lost_targets>
+        <max_number_of_entries>10000</max_number_of_entries>
+        <log_age_in_days>365</log_age_in_days>
+    </Arpa>
+    <FPGA>
+        <operating_mode_set>0<!--0: Normal, 1: Short only, 2: Medium only, 3: Long only, 4: Signal Generator, 5: RACON--></operating_mode_set>
+        <azimuth_window_kaiser_beta>5</azimuth_window_kaiser_beta>
+        <is_jitter_enabled>true</is_jitter_enabled>
+        <noise_scaling_short>1</noise_scaling_short>
+        <noise_scaling_medium>1.3</noise_scaling_medium>
+        <noise_scaling_long>1</noise_scaling_long>
+    </FPGA>
+    <PulseShape>
+        <S1DurationTime>1.2e-07</S1DurationTime>
+        <S1SubSample>1.5</S1SubSample>
+        <S1Bandwidth>0</S1Bandwidth>
+        <S1Slope>20</S1Slope>
+        <S1CompressionFactor>1</S1CompressionFactor>
+        <S1Amplitude>1</S1Amplitude>
+        <S1KaiserBeta>4<!-- [Might be overwriten during start, set overwrite_xml_file to false]--></S1KaiserBeta>
+        <S1WindowFunction>5</S1WindowFunction>
+        <RaconDurationTime>3.0000001e-07</RaconDurationTime>
+        <RaconSubSample>1.5</RaconSubSample>
+        <RaconBandwidth>0</RaconBandwidth>
+        <RaconSlope>20</RaconSlope>
+        <RaconCompressionFactor>1</RaconCompressionFactor>
+        <RaconAmplitude>1</RaconAmplitude>
+        <RaconKaiserBeta>4<!-- [Might be overwriten during start, set overwrite_xml_file to false]--></RaconKaiserBeta>
+        <RaconWindowFunction>5</RaconWindowFunction>
+        <M1DurationTime>4e-06</M1DurationTime>
+        <M1SubSample>1.5</M1SubSample>
+        <M1Bandwidth>10000000</M1Bandwidth>
+        <M1Slope>8</M1Slope>
+        <M1CompressionFactor>40</M1CompressionFactor>
+        <M1Amplitude>1</M1Amplitude>
+        <M1KaiserBeta>5</M1KaiserBeta>
+        <M1WindowFunction>5</M1WindowFunction>
+        <M2DurationTime>6.0000002e-06</M2DurationTime>
+        <M2SubSample>3</M2SubSample>
+        <M2Bandwidth>10000000</M2Bandwidth>
+        <M2Slope>8</M2Slope>
+        <M2CompressionFactor>60</M2CompressionFactor>
+        <M2Amplitude>1</M2Amplitude>
+        <M2KaiserBeta>5</M2KaiserBeta>
+        <M2WindowFunction>5</M2WindowFunction>
+        <L1DurationTime>2.4999999e-05</L1DurationTime>
+        <L1SubSample>6</L1SubSample>
+        <L1Bandwidth>5000000</L1Bandwidth>
+        <L1Slope>8</L1Slope>
+        <L1CompressionFactor>125</L1CompressionFactor>
+        <L1Amplitude>1</L1Amplitude>
+        <L1KaiserBeta>5</L1KaiserBeta>
+        <L1WindowFunction>5</L1WindowFunction>
+        <L2DurationTime>5.5e-05</L2DurationTime>
+        <L2SubSample>12</L2SubSample>
+        <L2Bandwidth>2500000</L2Bandwidth>
+        <L2Slope>8</L2Slope>
+        <L2CompressionFactor>137.5</L2CompressionFactor>
+        <L2Amplitude>1</L2Amplitude>
+        <L2KaiserBeta>5</L2KaiserBeta>
+        <L2WindowFunction>5</L2WindowFunction>
+    </PulseShape>
+    <trigger_1>
+        <disable_update_by_im>false</disable_update_by_im>
+        <short_enable>false</short_enable>
+        <medium_enable>false</medium_enable>
+        <long_enable>false</long_enable>
+        <short_pre>0<!--Value in nano seconds--></short_pre>
+        <short_post>0<!--Value in nano seconds--></short_post>
+        <medium_pre>0<!--Value in nano seconds--></medium_pre>
+        <medium_post>0<!--Value in nano seconds--></medium_post>
+        <long_pre>0<!--Value in nano seconds--></long_pre>
+        <long_post>0<!--Value in nano seconds--></long_post>
+    </trigger_1>
+    <trigger_2>
+        <disable_update_by_im>false</disable_update_by_im>
+        <short_enable>false</short_enable>
+        <medium_enable>false</medium_enable>
+        <long_enable>false</long_enable>
+        <short_pre>0<!--Value in nano seconds--></short_pre>
+        <short_post>0<!--Value in nano seconds--></short_post>
+        <medium_pre>0<!--Value in nano seconds--></medium_pre>
+        <medium_post>0<!--Value in nano seconds--></medium_post>
+        <long_pre>0<!--Value in nano seconds--></long_pre>
+        <long_post>0<!--Value in nano seconds--></long_post>
+    </trigger_2>
+    <antenna>
+        <simulation>false</simulation>
+        <antenna_beam_width_8ft>0.94999999<!--Unit: Deg [Might be overwriten during start, set overwrite_xml_file to false]--></antenna_beam_width_8ft>
+        <antenna_beam_width_5ft>1.5<!--Unit: Deg [Might be overwriten during start, set overwrite_xml_file to false]--></antenna_beam_width_5ft>
+        <antenna_beam_width_14ft>1.85<!--Unit: Deg [Might be overwriten during start, set overwrite_xml_file to false]--></antenna_beam_width_14ft>
+        <speed_capability>1</speed_capability>
+        <headmarker_adjust>0</headmarker_adjust>
+        <location_x_axis>0</location_x_axis>
+        <location_y_axis>0</location_y_axis>
+        <location_z_axis>0</location_z_axis>
+        <squint>0</squint>
+        <acp_arp_filter_length>60000<!--Cylces at 50MHz [Might be overwriten during start, set overwrite_xml_file to false]--></acp_arp_filter_length>
+        <type>10<!--1 = 14ft S-Band, 2 = 12ft S-Band, 10 = 5ft X-Band, 11 = 8ft X-Band--></type>
+    </antenna>
+    <video>
+        <video_mode>4</video_mode>
+        <mbs_length>0</mbs_length>
+        <noise_target>7</noise_target>
+        <offset_s1>2.6076801</offset_s1>
+        <offset_m1>2.91254</offset_m1>
+        <offset_m2>2.8299999</offset_m2>
+        <offset_l1>3.41504</offset_l1>
+        <offset_l2>3.8299999</offset_l2>
+        <offset_racon>6</offset_racon>
+    </video>
+    <rf_parameter>
+        <number_of_restarts>0</number_of_restarts>
+        <chirp>false</chirp>
+        <phase_shift_p0>0<!--Phaseshift of short pulse 0 - 360.0 deg--></phase_shift_p0>
+        <phase_shift_p1>0<!--Phaseshift of medium pulse 0 - 360.0 deg--></phase_shift_p1>
+        <phase_shift_p2>0<!--Phaseshift of long pulse 0 - 360.0 deg--></phase_shift_p2>
+        <rx_channel_i_amplitude>1<!--Amplitude scaling RX channel I (-1 to +1)--></rx_channel_i_amplitude>
+        <rx_channel_q_amplitude>1<!--Amplitude scaling RX channel I (-1 to +1)--></rx_channel_q_amplitude>
+        <rx_channel_phase>0<!--Phase offset RX (0°-360°)--></rx_channel_phase>
+        <tx_channel_i_amplitude>1<!--Amplitude scaling RX channel I (-1 to +1)--></tx_channel_i_amplitude>
+        <tx_channel_q_amplitude>1<!--Amplitude scaling RX channel I (-1 to +1)--></tx_channel_q_amplitude>
+        <tx_channel_phase>0<!--Phase offset TX (0°-360°)--></tx_channel_phase>
+        <number_of_channels>7</number_of_channels>
+        <channel_0>9327</channel_0>
+        <channel_0_enable>true</channel_0_enable>
+        <channel_1>9351.5996</channel_1>
+        <channel_1_enable>true</channel_1_enable>
+        <channel_2>9376.2002</channel_2>
+        <channel_2_enable>true</channel_2_enable>
+        <channel_3>9400.7998</channel_3>
+        <channel_3_enable>true</channel_3_enable>
+        <channel_4>9425.4004</channel_4>
+        <channel_4_enable>true</channel_4_enable>
+        <channel_5>9450</channel_5>
+        <channel_5_enable>true</channel_5_enable>
+        <channel_6>9474.5996</channel_6>
+        <channel_6_enable>true</channel_6_enable>
+        <temperature_lna_alarm>120</temperature_lna_alarm>
+        <temperature_lna_hysterese>110</temperature_lna_hysterese>
+        <temperature_dr1_alarm>120</temperature_dr1_alarm>
+        <temperature_dr1_hysterese>110</temperature_dr1_hysterese>
+        <temperature_dr2_alarm>120</temperature_dr2_alarm>
+        <temperature_dr2_hysterese>110</temperature_dr2_hysterese>
+        <temperature_pa_alarm>120</temperature_pa_alarm>
+        <temperature_pa_hysterese>110</temperature_pa_hysterese>
+        <channel_0_I>0</channel_0_I>
+        <channel_0_Q>0</channel_0_Q>
+        <channel_1_I>0</channel_1_I>
+        <channel_1_Q>0</channel_1_Q>
+        <channel_2_I>0</channel_2_I>
+        <channel_2_Q>0</channel_2_Q>
+        <channel_3_I>0</channel_3_I>
+        <channel_3_Q>0</channel_3_Q>
+        <channel_4_I>0</channel_4_I>
+        <channel_4_Q>0</channel_4_Q>
+        <channel_5_I>0</channel_5_I>
+        <channel_5_Q>0</channel_5_Q>
+        <channel_6_I>0</channel_6_I>
+        <channel_6_Q>0</channel_6_Q>
+        <if_frequency_p0>-13300000<!--Unit: Hz [Might be overwriten during start, set overwrite_xml_file to false]--></if_frequency_p0>
+        <if_frequency_p1>18832500<!--Unit: Hz [Might be overwriten during start, set overwrite_xml_file to false]--></if_frequency_p1>
+        <if_frequency_p2>9112500<!--Unit: Hz [Might be overwriten during start, set overwrite_xml_file to false]--></if_frequency_p2>
+        <forward_power_reference_watt>100</forward_power_reference_watt>
+        <tx_lo_feedthrough_dc_offset_I>0</tx_lo_feedthrough_dc_offset_I>
+        <tx_lo_feedthrough_dc_offset_Q>0</tx_lo_feedthrough_dc_offset_Q>
+        <maximum_reflection>6<!--Reflection in dB--></maximum_reflection>
+        <minimum_power_threshold>-3<!--3dB below target power--></minimum_power_threshold>
+        <embedded_controller_tick_logging_enable>false<!--Enables logging of all amplifier controller information for each tick. If enabled for sustained periods (days), can fill up storage media, so use sparingly and disable when no longer required.--></embedded_controller_tick_logging_enable>
+        <error_threshold_50V_power_supply>47<!--Voltage threshold in V to flag an error for the 50V power supply--></error_threshold_50V_power_supply>
+    </rf_parameter>
+    <blanking_sector>
+        <number_of_sectors>4</number_of_sectors>
+        <disable_updater_by_im>false</disable_updater_by_im>
+        <start_1>0</start_1>
+        <stop_1>0</stop_1>
+        <start_2>0</start_2>
+        <stop_2>0</stop_2>
+        <start_3>0</start_3>
+        <stop_3>0</stop_3>
+        <start_4>0</start_4>
+        <stop_4>0</stop_4>
+    </blanking_sector>
+    <Motor>
+        <Enable>true</Enable>
+        <SetpointNormSpeedRPM>1750</SetpointNormSpeedRPM>
+        <SetpointHighSpeedRPM>3000</SetpointHighSpeedRPM>
+        <PIControlP>0.2</PIControlP>
+        <PIControlI>0.1</PIControlI>
+        <ACPImpulsesPerRev>72</ACPImpulsesPerRev>
+        <OvercurrentThresholdA>4.1999998</OvercurrentThresholdA>
+        <GearRatio>72</GearRatio>
+        <MaxFrequencyRpm>4000</MaxFrequencyRpm>
+        <MinFrequencyRpm>100</MinFrequencyRpm>
+        <AccelerationTimeSec>5</AccelerationTimeSec>
+        <DecelerationTimeSec>5</DecelerationTimeSec>
+        <RatedVoltageV>230</RatedVoltageV>
+        <RatedCurrentA>4.1999998</RatedCurrentA>
+        <RatedFrequencyHz>60</RatedFrequencyHz>
+        <RatedSpeedRPM>1750</RatedSpeedRPM>
+        <VectorSpeedGainPercent>50</VectorSpeedGainPercent>
+        <VectorCurrentLimitPercent>150</VectorCurrentLimitPercent>
+        <CurrentEnabled>true</CurrentEnabled>
+        <CurrentSamplingPeriodMs>500</CurrentSamplingPeriodMs>
+        <CurrentSamplesNumber>32</CurrentSamplesNumber>
+        <CurrentAverage>true</CurrentAverage>
+        <CurrentStandardDeviation>true</CurrentStandardDeviation>
+        <CurrentDbSavePeriodS>16</CurrentDbSavePeriodS>
+        <PowerEnabled>true</PowerEnabled>
+        <PowerSamplingPeriodMs>500</PowerSamplingPeriodMs>
+        <PowerSamplesNumber>32</PowerSamplesNumber>
+        <PowerAverage>true</PowerAverage>
+        <PowerStandardDeviation>true</PowerStandardDeviation>
+        <PowerDbSavePeriodS>16</PowerDbSavePeriodS>
+        <TorqueEnabled>true</TorqueEnabled>
+        <TorqueSamplingPeriodMs>500</TorqueSamplingPeriodMs>
+        <TorqueSamplesNumber>32</TorqueSamplesNumber>
+        <TorqueAverage>true</TorqueAverage>
+        <TorqueStandardDeviation>true</TorqueStandardDeviation>
+        <TorqueDbSavePeriodS>16</TorqueDbSavePeriodS>
+        <DcBusVoltageEnabled>true</DcBusVoltageEnabled>
+        <DcBusVoltageSamplingPeriodMs>500</DcBusVoltageSamplingPeriodMs>
+        <DcBusVoltageSamplesNumber>32</DcBusVoltageSamplesNumber>
+        <DcBusVoltageAverage>true</DcBusVoltageAverage>
+        <DcBusVoltageStandardDeviation>true</DcBusVoltageStandardDeviation>
+        <DcBusVoltageDbSavePeriodS>16</DcBusVoltageDbSavePeriodS>
+        <FCTemp1Enabled>true</FCTemp1Enabled>
+        <FCTemp1SamplingPeriodMs>1000</FCTemp1SamplingPeriodMs>
+        <FCTemp1SamplesNumber>32</FCTemp1SamplesNumber>
+        <FCTemp1Average>false</FCTemp1Average>
+        <FCTemp1StandardDeviation>false</FCTemp1StandardDeviation>
+        <FCTemp1DbSavePeriodS>32</FCTemp1DbSavePeriodS>
+        <FCTemp2Enabled>true</FCTemp2Enabled>
+        <FCTemp2SamplingPeriodMs>1000</FCTemp2SamplingPeriodMs>
+        <FCTemp2SamplesNumber>32</FCTemp2SamplesNumber>
+        <FCTemp2Average>false</FCTemp2Average>
+        <FCTemp2StandardDeviation>false</FCTemp2StandardDeviation>
+        <FCTemp2DbSavePeriodS>32</FCTemp2DbSavePeriodS>
+        <ArpEnabled>true</ArpEnabled>
+        <ArpPeriodMs>1000</ArpPeriodMs>
+        <ArpSamplesNumber>32</ArpSamplesNumber>
+        <ArpAverage>true</ArpAverage>
+        <ArpStandardDeviation>true</ArpStandardDeviation>
+        <ArpDbSavePeriodS>32</ArpDbSavePeriodS>
+        <extended_soft_start_temperature>10<!--Temperature threshold in degree celsius to enable longer soft start at low temperature--></extended_soft_start_temperature>
+    </Motor>
+    <Logger>
+        <max_memory_usage_emmc>80</max_memory_usage_emmc>
+        <max_memory_usage_sd>80</max_memory_usage_sd>
+        <control_board_logging_interval_sec>600</control_board_logging_interval_sec>
+        <processsupervisor_logging_interval_sec>600</processsupervisor_logging_interval_sec>
+        <enable_logger>true</enable_logger>
+        <update_interval_rfboard>300</update_interval_rfboard>
+    </Logger>
+    <Asterix>
+        <ip_address>-285212671</ip_address>
+        <port>4433</port>
+        <enable>false</enable>
+    </Asterix>
+    <PerformanceMonitor>
+        <sensitivity_positive_reference_value>91.11216</sensitivity_positive_reference_value>
+        <sensitivity_positive_reference_frequency>13300000</sensitivity_positive_reference_frequency>
+        <sensitivity_negative_reference_value>122.93526</sensitivity_negative_reference_value>
+        <sensitivity_negative_reference_frequency>-13300000</sensitivity_negative_reference_frequency>
+        <sensitivity_reference_year>2026</sensitivity_reference_year>
+        <sensitivity_reference_month>3</sensitivity_reference_month>
+        <sensitivity_reference_day>27</sensitivity_reference_day>
+        <sensitivity_reference_hour>15</sensitivity_reference_hour>
+        <sensitivity_reference_minute>44</sensitivity_reference_minute>
+        <sensitivity_positive_current_value>105.72</sensitivity_positive_current_value>
+        <sensitivity_positive_current_frequency>0</sensitivity_positive_current_frequency>
+        <sensitivity_negative_current_value>0</sensitivity_negative_current_value>
+        <sensitivity_negative_current_frequency>0</sensitivity_negative_current_frequency>
+        <sensitivity_current_year>0</sensitivity_current_year>
+        <sensitivity_current_month>0</sensitivity_current_month>
+        <sensitivity_current_day>0</sensitivity_current_day>
+        <sensitivity_current_hour>0</sensitivity_current_hour>
+        <sensitivity_current_minute>0</sensitivity_current_minute>
+        <forward_power_current>0</forward_power_current>
+        <forward_power_reference>50.00658</forward_power_reference>
+        <backward_power_current>0</backward_power_current>
+        <backward_power_reference>29.567177</backward_power_reference>
+        <execute_pm_cyclic>false</execute_pm_cyclic>
+        <pm_cyclic_periode>600</pm_cyclic_periode>
+        <temperature_current_value>33</temperature_current_value>
+        <temperature_reference_value>37</temperature_reference_value>
+        <rx_sensitivity_temperature_correction>-0.079999998<!--Correction factor for SSRC Revision A--></rx_sensitivity_temperature_correction>
+        <power_threshold>-4</power_threshold>
+        <sensitivity_threshold>-6</sensitivity_threshold>
+        <total_threshold>-8</total_threshold>
+        <current_performance_reduction>0</current_performance_reduction>
+        <comparision_mode>1</comparision_mode>
+        <sideband_suppression>15</sideband_suppression>
+        <reference_available>true</reference_available>
+    </PerformanceMonitor>
+</Root>

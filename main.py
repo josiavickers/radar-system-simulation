@@ -24,12 +24,14 @@ def main():
     # BB Signal Generation
     s_tx_bb = generate_baseband_signal(F_START,F_END,F_SAMPLE,N)
     plot_power_spectrum(s_tx_bb, N, F_SAMPLE, "BB Signal")
-    #plot_mag_and_phase_time_domain(s_bb, "Baseband Signal")
     
     # Windowing
     s_tx_windowed = window_function(s_tx_bb, N)
     plot_power_spectrum(s_tx_windowed, N, F_SAMPLE, "Windowed BB Signal")
-    #plot_mag_and_phase_time_domain(s_windowed, "Windowed Baseband Signal")
+
+    I = np.real(s_tx_windowed)
+    Q = np.imag(s_tx_windowed)
+    plot_IQ_time_domain(I,Q,"Windowed BB Signal")
 
     # Upconversion to IF
     s_tx_IF = IF_upconversion(s_tx_windowed, N, F_SAMPLE, F_IF)
@@ -59,7 +61,7 @@ def main():
         Pin_dB.append(10 * np.log10(Pin))
         Pout_dB.append(10 * np.log10(Pout))
     
-    #plot_AM_AM_curve(Pin_dB, Pout_dB)
+    plot_AM_AM_curve(Pin_dB, Pout_dB)
 
     # PA
     s_tx = PA_linear(s_tx_RF, PA_GAIN)

@@ -22,8 +22,3 @@ def IF_downconversion(if_signal, num_samples, f_s, f_IF):
     lo = np.exp(-1j * 2 * np.pi * f_IF * n / f_s)
     bb = if_signal * lo
     return bb
-
-# Matched Filter - correlation
-def matched_filter(received_bb, reference_bb):
-    # Full correlation over all lags:
-    return np.correlate(received_bb, np.conj(reference_bb), mode='full')

@@ -1,0 +1,31 @@
+app:
+  name: RadarSystemSimulation
+
+params:
+  #sample_freq: 77760000 # 77.76MHz
+  sample_freq: 5000000000 # 5GHz for demo purposes
+
+# Standard Operation Mode - Operation Mode 0.75NM (and 1.5NM)
+sband_pulses:
+  S1DurationTime: 1.2e-07 # 120ns
+  S1Bandwidth: 0 
+  S1Start: 12.0e-06 # 12us
+  S1Delay: 102 # samples
+  S1Amplitude: 1
+  S1KaiserBeta: 4
+  M1DurationTime: 4.0e-06 # 4us
+  M1Bandwidth: 10000000 # 10MHz
+  M1Start: 100e-06 # 100us 
+  M1Delay: 707 # samples
+  M1Amplitude: 1 # samples
+  M1KaiserBeta: 5
+
+if_conversion:
+  if_freq_short_pulse: 19440000 # 19.44 MHz
+  if_freq_medium_pulse: -19440000 # -19.44 MHz
+
+rf_conversion:
+  rf_freq_channel_0: 2930000000 # 2.93GHz
+
+
+

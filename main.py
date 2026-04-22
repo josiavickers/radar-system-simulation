@@ -32,7 +32,6 @@ def main():
     # Short Pulse S1
     s1_duration = config["sband_pulses"]["S1DurationTime"]
     s1_bandwidth = config["sband_pulses"]["S1Bandwidth"]
-    s1_start = config["sband_pulses"]["S1Start"]
     s1_delay_samples = config["sband_pulses"]["S1Delay"]
     s1_amplitude = config["sband_pulses"]["S1Amplitude"]
     s1_kaiser_beta = config["sband_pulses"]["S1KaiserBeta"]
@@ -40,7 +39,6 @@ def main():
     # Medium Pulse M1
     m1_duration = config["sband_pulses"]["M1DurationTime"]
     m1_bandwidth = config["sband_pulses"]["M1Bandwidth"]
-    m1_start = config["sband_pulses"]["M1Start"]
     m1_delay_samples = config["sband_pulses"]["M1Delay"]
     m1_amplitude = config["sband_pulses"]["M1Amplitude"]
     m1_kaiser_beta = config["sband_pulses"]["M1KaiserBeta"]
@@ -60,41 +58,41 @@ def main():
 
     # S1 BB Signal Generation
     s1_tx_bb = generate_baseband_signal(s1_amplitude,0,s1_bandwidth,sample_freq,N_S1) 
-    #plot_power_spectrum(s1_tx_bb, N_S1, sample_freq, "S1 BB Signal")
+    plot_power_spectrum(s1_tx_bb, N_S1, sample_freq, "S1 BB Signal")
 
     I = np.real(s1_tx_bb)
     Q = np.imag(s1_tx_bb)
-    #plot_IQ_time_domain(I,Q,"BB S1")
+    plot_IQ_time_domain(I,Q,"BB S1")
 
     # M1 BB Signal Generation
     m1_tx_bb = generate_baseband_signal(m1_amplitude,0,m1_bandwidth,sample_freq,N_M1) 
-    #plot_power_spectrum(m1_tx_bb, N_M1, sample_freq, "M1 BB Signal")
+    plot_power_spectrum(m1_tx_bb, N_M1, sample_freq, "M1 BB Signal")
 
     I = np.real(m1_tx_bb)
     Q = np.imag(m1_tx_bb)
-    #plot_IQ_time_domain(I,Q,"BB M1")
+    plot_IQ_time_domain(I,Q,"BB M1")
     
     # Kaiser Window
     s1_tx_windowed = window_function(s1_tx_bb, N_S1, s1_kaiser_beta)
-    #plot_power_spectrum(s1_tx_windowed, N_S1, sample_freq, "Windowed S1 BB Signal")
+    plot_power_spectrum(s1_tx_windowed, N_S1, sample_freq, "Windowed S1 BB Signal")
 
     I = np.real(s1_tx_windowed)
     Q = np.imag(s1_tx_windowed)
-    #plot_IQ_time_domain(I,Q,"Windowed S1 BB Signal")
+    plot_IQ_time_domain(I,Q,"Windowed S1 BB Signal")
 
     m1_tx_windowed = window_function(m1_tx_bb, N_M1, m1_kaiser_beta)
-    #plot_power_spectrum(m1_tx_windowed, N_M1, sample_freq, "Windowed M1 BB Signal")
+    plot_power_spectrum(m1_tx_windowed, N_M1, sample_freq, "Windowed M1 BB Signal")
 
     I = np.real(m1_tx_windowed)
     Q = np.imag(m1_tx_windowed)
-    #plot_IQ_time_domain(I,Q,"Windowed M1 BB Signal")
+    plot_IQ_time_domain(I,Q,"Windowed M1 BB Signal")
 
     # Upconversion to IF
     s1_tx_IF = IF_upconversion(s1_tx_windowed, N_S1, sample_freq, if_freq_s1)
-    #plot_power_spectrum(s1_tx_IF, N_S1, sample_freq, "S1 IF Signal")
+    plot_power_spectrum(s1_tx_IF, N_S1, sample_freq, "S1 IF Signal")
 
     m1_tx_IF = IF_upconversion(m1_tx_windowed, N_M1, sample_freq, if_freq_m1)
-    #plot_power_spectrum(m1_tx_IF, N_M1, sample_freq, "M1 IF Signal")
+    plot_power_spectrum(m1_tx_IF, N_M1, sample_freq, "M1 IF Signal")
 
     # Upconversion to RF
     s1_tx_RF = RF_upconversion(s1_tx_IF, N_S1, sample_freq, rf_freq_0)

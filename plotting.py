@@ -50,10 +50,10 @@ def plot_mag_spectrum(complex_signal, num_samples, f_s, signal_name):
  
     # Plot magnitude
     plt.figure()
-    plt.plot(freqs_shifted/1e6, 20*np.log10(np.abs(s_shifted)))
+    plt.plot(freqs_shifted/1e6, 20*np.log10(np.abs(s_shifted)) + 30)
     plt.title(f"{signal_name} Magnitude Spectrum")
     plt.xlabel("Frequency (MHz)")
-    plt.ylabel("Magnitude (dBV)")
+    plt.ylabel("Magnitude (dBm)")
     plt.grid(True)
     plt.show()
 
@@ -66,18 +66,18 @@ def plot_power_spectrum(complex_signal, num_samples, f_s, signal_name):
     freqs = np.fft.fftfreq(num_samples, 1 / f_s)
     freqs_shifted = np.fft.fftshift(freqs)
 
-    # Power spectrum
-    power = np.abs(s_shifted) ** 2
+    # Wave amplitudes
+    s_shifted_normalised = 2*s_shifted/num_samples
 
-    # Convert to dB 
-    power_db = 10 * np.log10(power + 1e-12) # add small epsilon to avoid log(0)
+    # Convert wave amplitude to dBm 
+    power_dbm = 20 * np.log10(s_shifted_normalised + 1e-12) + 30 # add small epsilon to avoid log(0)
 
     # Plot
     plt.figure()
-    plt.plot(freqs_shifted / 1e6, power_db)
+    plt.plot(freqs_shifted / 1e6, power_dbm)
     plt.title(f"{signal_name} Power Spectrum")
     plt.xlabel("Frequency (MHz)")
-    plt.ylabel("Power (dBW)")
+    plt.ylabel("Power (dBm)")
     plt.grid(True)
     plt.show()
 

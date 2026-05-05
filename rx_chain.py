@@ -1,8 +1,9 @@
 import numpy as np
 
 # Low Noise Amplifier
-def LNA_linear(rf_signal, gain):
-    return rf_signal*gain
+def LNA_linear(rf_signal, gain_dB):
+    gain_amp = 10**(gain_dB / 20)
+    return rf_signal*gain_amp
 
 # Downconversion from real RF to complex IF
 def RF_downconversion(rf_signal, num_samples, f_s, f_RF):

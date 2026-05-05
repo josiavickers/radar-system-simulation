@@ -4,21 +4,18 @@ from channel import *
 from plotting import *
 from load_config import *
 
-# Parameters
-# F_SAMPLE = 500e6 # 500MHz
-# N = 4096 # Number of samples
-# F_START = 0 # start freq (baseband)
-# F_END = 10e6 # end freq
-# F_IF = 40e6 # Intermediate freq
-# F_RF = 60e6 # Radio freq
-
 PA_GAIN = 1
-LNA_GAIN = 100
+LNA_GAIN = 30 # dB
 
-A = 0.001 # received signal attenuation
+A = -80 # received signal attenuation dB
 
-# R = 100.0 # target range in metres
-# TAU = 2*R/3e8 # time delay
+def zero_pad(signal, target_length):
+    pad_total = target_length - len(signal)
+    pad_left = pad_total // 2
+    pad_right = pad_total - pad_left
+
+    signal_padded = np.pad(signal, (pad_left, pad_right), mode='constant')
+    return signal_padded
 
 def main():
     config = load_config("config.yaml")
@@ -43,9 +40,17 @@ def main():
     m1_amplitude = config["sband_pulses"]["M1Amplitude"]
     m1_kaiser_beta = config["sband_pulses"]["M1KaiserBeta"]
 
+    # Long Pulse L1
+    l1_duration = config["sband_pulses"]["L1DurationTime"]
+    l1_bandwidth = config["sband_pulses"]["L1Bandwidth"]
+    l1_delay_samples = config["sband_pulses"]["L1Delay"]
+    l1_amplitude = config["sband_pulses"]["L1Amplitude"]
+    l1_kaiser_beta = config["sband_pulses"]["L1KaiserBeta"]
+
     # IF params
     if_freq_s1 = config["if_conversion"]["if_freq_short_pulse"]
     if_freq_m1 = config["if_conversion"]["if_freq_medium_pulse"]
+    if_freq_l1 = config["if_conversion"]["if_freq_long_pulse"]
 
     # RF params
     rf_freq_0 = config["rf_conversion"]["rf_freq_channel_0"]
@@ -55,51 +60,76 @@ def main():
     """
     N_S1 = round(s1_duration * sample_freq) # HOW MANY SAMPLE POINTS?? SAMPLES = PULSE DURATION * F_SAMPLE
     N_M1 = round(m1_duration * sample_freq) # HOW MANY SAMPLE POINTS?? SAMPLES = PULSE DURATION * F_SAMPLE
+    N_L1 = round(l1_duration * sample_freq) # HOW MANY SAMPLE POINTS?? SAMPLES = PULSE DURATION * F_SAMPLE
 
     # S1 BB Signal Generation
     s1_tx_bb = generate_baseband_signal(s1_amplitude,0,s1_bandwidth,sample_freq,N_S1) 
-    plot_power_spectrum(s1_tx_bb, N_S1, sample_freq, "S1 BB Signal")
+    #plot_power_spectrum(s1_tx_bb, N_S1, sample_freq, "S1 BB Signal")
 
     I = np.real(s1_tx_bb)
     Q = np.imag(s1_tx_bb)
-    plot_IQ_time_domain(I,Q,"BB S1")
+    #plot_IQ_time_domain(I,Q,"BB S1")
 
     # M1 BB Signal Generation
     m1_tx_bb = generate_baseband_signal(m1_amplitude,0,m1_bandwidth,sample_freq,N_M1) 
-    plot_power_spectrum(m1_tx_bb, N_M1, sample_freq, "M1 BB Signal")
+    #plot_power_spectrum(m1_tx_bb, N_M1, sample_freq, "M1 BB Signal")
 
     I = np.real(m1_tx_bb)
     Q = np.imag(m1_tx_bb)
-    plot_IQ_time_domain(I,Q,"BB M1")
+    #plot_IQ_time_domain(I,Q,"BB M1")
+
+    # L1 BB Signal Generation
+    l1_tx_bb = generate_baseband_signal(l1_amplitude,0,l1_bandwidth,sample_freq,N_L1) 
+    #plot_power_spectrum(l1_tx_bb, N_L1, sample_freq, "L1 BB Signal")
+
+    I = np.real(l1_tx_bb)
+    Q = np.imag(l1_tx_bb)
+    #plot_IQ_time_domain(I,Q,"BB L1")
     
     # Kaiser Window
     s1_tx_windowed = window_function(s1_tx_bb, N_S1, s1_kaiser_beta)
-    plot_power_spectrum(s1_tx_windowed, N_S1, sample_freq, "Windowed S1 BB Signal")
+    #plot_power_spectrum(s1_tx_windowed, N_S1, sample_freq, "Windowed S1 BB Signal")
 
     I = np.real(s1_tx_windowed)
     Q = np.imag(s1_tx_windowed)
-    plot_IQ_time_domain(I,Q,"Windowed S1 BB Signal")
+    #plot_IQ_time_domain(I,Q,"Windowed S1 BB Signal")
 
     m1_tx_windowed = window_function(m1_tx_bb, N_M1, m1_kaiser_beta)
-    plot_power_spectrum(m1_tx_windowed, N_M1, sample_freq, "Windowed M1 BB Signal")
+    #plot_power_spectrum(m1_tx_windowed, N_M1, sample_freq, "Windowed M1 BB Signal")
 
     I = np.real(m1_tx_windowed)
     Q = np.imag(m1_tx_windowed)
-    plot_IQ_time_domain(I,Q,"Windowed M1 BB Signal")
+    #plot_IQ_time_domain(I,Q,"Windowed M1 BB Signal")
+
+    l1_tx_windowed = window_function(l1_tx_bb, N_L1, l1_kaiser_beta)
+    #plot_power_spectrum(l1_tx_windowed, N_L1, sample_freq, "Windowed L1 BB Signal")
+
+    I = np.real(l1_tx_windowed)
+    Q = np.imag(l1_tx_windowed)
+    #plot_IQ_time_domain(I,Q,"Windowed L1 BB Signal")
 
     # Upconversion to IF
     s1_tx_IF = IF_upconversion(s1_tx_windowed, N_S1, sample_freq, if_freq_s1)
-    plot_power_spectrum(s1_tx_IF, N_S1, sample_freq, "S1 IF Signal")
-
     m1_tx_IF = IF_upconversion(m1_tx_windowed, N_M1, sample_freq, if_freq_m1)
-    plot_power_spectrum(m1_tx_IF, N_M1, sample_freq, "M1 IF Signal")
+    l1_tx_IF = IF_upconversion(l1_tx_windowed, N_L1, sample_freq, if_freq_l1)
+
+    # Zero pad short pulse for plotting
+    s1_tx_IF_padded = zero_pad(s1_tx_IF, len(m1_tx_IF)) # BUT ADDING SAMPLE POINTS IS CONVOLVING WITH SINC 
+
+    #plot_power_spectrum(s1_tx_IF, N_S1, sample_freq, "S1 IF Signal")
+    #plot_power_spectrum(s1_tx_IF_padded, len(s1_tx_IF_padded), sample_freq, "S1 IF Signal")
+    #plot_power_spectrum(m1_tx_IF, N_M1, sample_freq, "M1 IF Signal")
+    #plot_power_spectrum(l1_tx_IF, N_L1, sample_freq, "L1 IF Signal")
 
     # Upconversion to RF
     s1_tx_RF = RF_upconversion(s1_tx_IF, N_S1, sample_freq, rf_freq_0)
-    plot_power_spectrum(s1_tx_RF, N_S1, sample_freq, "S1 RF Signal")
+    #plot_power_spectrum(s1_tx_RF, N_S1, sample_freq, "S1 RF Signal")
 
     m1_tx_RF = RF_upconversion(m1_tx_IF, N_M1, sample_freq, rf_freq_0)
-    plot_power_spectrum(m1_tx_RF, N_M1, sample_freq, "M1 RF Signal")
+    #plot_power_spectrum(m1_tx_RF, N_M1, sample_freq, "M1 RF Signal")
+
+    l1_tx_RF = RF_upconversion(l1_tx_IF, N_L1, sample_freq, rf_freq_0)
+    #plot_power_spectrum(l1_tx_RF, N_L1, sample_freq, "L1 RF Signal")
 
     # PA modelling
     a_in_sweep = np.linspace(0.01,10.0,200) # input amplitude sweep
@@ -121,7 +151,7 @@ def main():
         Pin_dB.append(10 * np.log10(Pin))
         Pout_dB.append(10 * np.log10(Pout))
     
-    plot_AM_AM_curve(Pin_dB, Pout_dB)
+    #plot_AM_AM_curve(Pin_dB, Pout_dB)
 
     # PA
     s1_tx = PA_linear(s1_tx_RF, PA_GAIN)
@@ -129,6 +159,9 @@ def main():
 
     m1_tx = PA_linear(m1_tx_RF, PA_GAIN)
     plot_power_spectrum(m1_tx, N_M1, sample_freq, "PA Output")
+
+    l1_tx = PA_linear(l1_tx_RF, PA_GAIN)
+    plot_power_spectrum(l1_tx, N_L1, sample_freq, "PA Output")
 
     """
     RX Chain
@@ -141,9 +174,19 @@ def main():
     m1_rx = apply_time_delay(m1_rx, m1_delay_samples)
     plot_power_spectrum(m1_rx, N_M1, sample_freq, "M1 Received Signal")
 
-    # # LNA
-    # s_rx = LNA_linear(s_rx, LNA_GAIN)
-    # plot_power_spectrum(s_rx, N, F_SAMPLE, "Received Signal (Post LNA)")
+    l1_rx = apply_attenuation(l1_tx, A)
+    l1_rx = apply_time_delay(l1_rx, l1_delay_samples)
+    plot_power_spectrum(l1_rx, N_L1, sample_freq, "L1 Received Signal")
+
+    # LNA
+    s1_rx = LNA_linear(s1_rx, LNA_GAIN)
+    plot_power_spectrum(s1_rx, N_S1, sample_freq, "S1 Received Signal (Post LNA)")
+
+    m1_rx = LNA_linear(m1_rx, LNA_GAIN)
+    plot_power_spectrum(m1_rx, N_M1, sample_freq, "M1 Received Signal (Post LNA)")
+
+    l1_rx = LNA_linear(l1_rx, LNA_GAIN)
+    plot_power_spectrum(l1_rx, N_L1, sample_freq, "L1 Received Signal (Post LNA)")
 
     # # Downconversion to IF
     # s_rx_IF = RF_downconversion(s_rx, N, F_SAMPLE, F_RF)

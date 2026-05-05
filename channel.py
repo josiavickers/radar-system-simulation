@@ -1,7 +1,8 @@
 import numpy as np
 
-def apply_attenuation(signal, gain):
-    return signal*gain
+def apply_attenuation(signal, gain_dB):
+    gain_amp = 10**(gain_dB / 20)
+    return signal*gain_amp
 
 # # NEED TO CHECK IF THIS IS WORKING PROPERLY - PLOT PHASE FUNCTION NEEDED!
 # def apply_time_delay(signal, tau, f_s):

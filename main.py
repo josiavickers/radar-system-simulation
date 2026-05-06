@@ -116,10 +116,10 @@ def main():
     # Zero pad short pulse for plotting
     s1_tx_IF_padded = zero_pad(s1_tx_IF, len(m1_tx_IF)) # BUT ADDING SAMPLE POINTS IS CONVOLVING WITH SINC 
 
-    #plot_power_spectrum(s1_tx_IF, N_S1, sample_freq, "S1 IF Signal")
+    plot_power_spectrum(s1_tx_IF, N_S1, sample_freq, "S1 IF Signal")
     #plot_power_spectrum(s1_tx_IF_padded, len(s1_tx_IF_padded), sample_freq, "S1 IF Signal")
-    #plot_power_spectrum(m1_tx_IF, N_M1, sample_freq, "M1 IF Signal")
-    #plot_power_spectrum(l1_tx_IF, N_L1, sample_freq, "L1 IF Signal")
+    plot_power_spectrum(m1_tx_IF, N_M1, sample_freq, "M1 IF Signal")
+    plot_power_spectrum(l1_tx_IF, N_L1, sample_freq, "L1 IF Signal")
 
     # Upconversion to RF
     s1_tx_RF = RF_upconversion(s1_tx_IF, N_S1, sample_freq, rf_freq_0)
@@ -155,28 +155,28 @@ def main():
 
     # PA
     s1_tx = PA_linear(s1_tx_RF, PA_GAIN)
-    plot_power_spectrum(s1_tx, N_S1, sample_freq, "PA Output")
+    #plot_power_spectrum(s1_tx, N_S1, sample_freq, "PA Output")
 
     m1_tx = PA_linear(m1_tx_RF, PA_GAIN)
-    plot_power_spectrum(m1_tx, N_M1, sample_freq, "PA Output")
+    #plot_power_spectrum(m1_tx, N_M1, sample_freq, "PA Output")
 
     l1_tx = PA_linear(l1_tx_RF, PA_GAIN)
-    plot_power_spectrum(l1_tx, N_L1, sample_freq, "PA Output")
+    #plot_power_spectrum(l1_tx, N_L1, sample_freq, "PA Output")
 
     """
     RX Chain
     """
     s1_rx = apply_attenuation(s1_tx, A)
     s1_rx = apply_time_delay(s1_rx, s1_delay_samples)
-    plot_power_spectrum(s1_rx, N_S1, sample_freq, "S1 Received Signal")
+    #plot_power_spectrum(s1_rx, N_S1, sample_freq, "S1 Received Signal")
 
     m1_rx = apply_attenuation(m1_tx, A)
     m1_rx = apply_time_delay(m1_rx, m1_delay_samples)
-    plot_power_spectrum(m1_rx, N_M1, sample_freq, "M1 Received Signal")
+    #plot_power_spectrum(m1_rx, N_M1, sample_freq, "M1 Received Signal")
 
     l1_rx = apply_attenuation(l1_tx, A)
     l1_rx = apply_time_delay(l1_rx, l1_delay_samples)
-    plot_power_spectrum(l1_rx, N_L1, sample_freq, "L1 Received Signal")
+    #plot_power_spectrum(l1_rx, N_L1, sample_freq, "L1 Received Signal")
 
     # LNA
     s1_rx = LNA_linear(s1_rx, LNA_GAIN)
@@ -188,9 +188,15 @@ def main():
     l1_rx = LNA_linear(l1_rx, LNA_GAIN)
     plot_power_spectrum(l1_rx, N_L1, sample_freq, "L1 Received Signal (Post LNA)")
 
-    # # Downconversion to IF
-    # s_rx_IF = RF_downconversion(s_rx, N, F_SAMPLE, F_RF)
-    # plot_power_spectrum(s_rx_IF, N, F_SAMPLE, "Received Signal (IF)")
+    # Downconversion to IF
+    s1_rx_IF = RF_downconversion(s1_rx, N_S1, sample_freq, rf_freq_0)
+    plot_power_spectrum(s1_rx_IF, N_S1, sample_freq, "S1 Received Signal (IF)")
+
+    m1_rx_IF = RF_downconversion(m1_rx, N_M1, sample_freq, rf_freq_0)
+    plot_power_spectrum(m1_rx_IF, N_M1, sample_freq, "M1 Received Signal (IF)")
+
+    l1_rx_IF = RF_downconversion(l1_rx, N_L1, sample_freq, rf_freq_0)
+    plot_power_spectrum(l1_rx_IF, N_L1, sample_freq, "L1 Received Signal (IF)")
 
     # # Downconversion to BB
     # s_rx_BB = IF_downconversion(s_rx_IF, N, F_SAMPLE, F_IF)

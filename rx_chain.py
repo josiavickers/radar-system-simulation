@@ -23,3 +23,13 @@ def IF_downconversion(if_signal, num_samples, f_s, f_IF):
     lo = np.exp(-1j * 2 * np.pi * f_IF * n / f_s)
     bb = if_signal * lo
     return bb
+
+# Perform matched filtering
+def matched_filter(rx_signal, tx_signal):
+    # Time-reverse and conjugate the transmitted pulse
+    h = np.conjugate(tx_signal[::-1])
+    
+    # Perform convolution (basically correlation but reversed tx_signal so convolution)
+    output = np.convolve(rx_signal, h, mode='same')
+    
+    return output

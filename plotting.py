@@ -57,24 +57,26 @@ def plot_mag_spectrum(complex_signal, num_samples, f_s, signal_name):
     plt.grid(True)
     plt.show()
 
-def plot_power_spectrum(complex_signal, num_samples, f_s, signal_name):
+def plot_power_spectrum(signal, f_s, f_c, signal_name):
+    N = len(signal)
+
     # FFT
-    s = np.fft.fft(complex_signal)
-    s_shifted = np.fft.fftshift(s)
+    S = np.fft.fftshift(np.fft.fft(signal))
 
     # Frequency axis
-    freqs = np.fft.fftfreq(num_samples, 1 / f_s)
-    freqs_shifted = np.fft.fftshift(freqs)
+    freqs = np.fft.fftshift(np.fft.fftfreq(N, d=1/f_s))
 
-    # Wave amplitudes
-    s_shifted_normalised = 2*s_shifted/num_samples
+    f_upconverted = freqs + f_c # plot relative to carrier 
+
+    # Correct wave amplitudes
+    S_normalised = 2*S/N
 
     # Convert wave amplitude to dBm 
-    power_dbm = 20 * np.log10(s_shifted_normalised + 1e-12) + 30 # add small epsilon to avoid log(0)
+    power_dbm = 20 * np.log10(S_normalised + 1e-12) + 30 # add small epsilon to avoid log(0)
 
     # Plot
     plt.figure()
-    plt.plot(freqs_shifted / 1e6, power_dbm)
+    plt.plot(f_upconverted / 1e6, power_dbm)
     plt.title(f"{signal_name} Power Spectrum")
     plt.xlabel("Frequency (MHz)")
     plt.ylabel("Power (dBm)")

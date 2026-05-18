@@ -3,6 +3,7 @@ from rx_chain import *
 from channel import *
 from plotting import *
 from load_config import *
+from BasebandSignal import *
 
 PA_GAIN = 1
 LNA_GAIN = 30 # dB
@@ -56,6 +57,10 @@ def main():
     # RF params
     rf_freq_0 = config["sband"]["rf_conversion"]["rf_freq_channel_0"]
 
+    # Generate BB signal
+    bb = BasebandSignal(s1_amplitude, tx_sample_freq, 0, s1_duration)
+    bb.plot_time_signal()
+
     """
     TX Chain
     """
@@ -71,10 +76,10 @@ def main():
     # Zero pad short pulse for plotting
     s1_tx_bb_padded = zero_pad(s1_tx_bb, len(m1_tx_bb)) 
 
-    plot_power_spectrum(s1_tx_bb, tx_sample_freq, 0, "S1 BB Signal")
+    #plot_power_spectrum(s1_tx_bb, tx_sample_freq, 0, "S1 BB Signal")
     #plot_power_spectrum(s1_tx_bb_padded, tx_sample_freq, 0, "S1 BB Signal (Zero-padded)")
-    plot_power_spectrum(m1_tx_bb, tx_sample_freq, 0, "M1 BB Signal")
-    plot_power_spectrum(l1_tx_bb, tx_sample_freq, 0, "L1 BB Signal")
+    #plot_power_spectrum(m1_tx_bb, tx_sample_freq, 0, "M1 BB Signal")
+    #plot_power_spectrum(l1_tx_bb, tx_sample_freq, 0, "L1 BB Signal")
 
     I = np.real(s1_tx_bb)
     Q = np.imag(s1_tx_bb)
@@ -134,10 +139,10 @@ def main():
     # plot_power_spectrum(m1_tx_RF, tx_sample_freq, rf_freq_0, "M1 RF Signal")
     # plot_power_spectrum(l1_tx_RF, tx_sample_freq, rf_freq_0, "L1 RF Signal")
 
-    plot_power_spectrum(s1_tx_RF, tx_sample_freq, 0, "S1 RF Signal")
-    plot_power_spectrum(s1_tx_RF_padded, tx_sample_freq, 0, "S1 RF Signal")
-    plot_power_spectrum(m1_tx_RF, tx_sample_freq, 0, "M1 RF Signal")
-    plot_power_spectrum(l1_tx_RF, tx_sample_freq, 0, "L1 RF Signal")
+    # plot_power_spectrum(s1_tx_RF, tx_sample_freq, 0, "S1 RF Signal")
+    # plot_power_spectrum(s1_tx_RF_padded, tx_sample_freq, 0, "S1 RF Signal")
+    # plot_power_spectrum(m1_tx_RF, tx_sample_freq, 0, "M1 RF Signal")
+    # plot_power_spectrum(l1_tx_RF, tx_sample_freq, 0, "L1 RF Signal")
 
     # PA modelling
     a_in_sweep = np.linspace(0.01,10.0,200) # input amplitude sweep
@@ -191,26 +196,26 @@ def main():
     m1_rx = LNA_linear(m1_rx, LNA_GAIN)
     l1_rx = LNA_linear(l1_rx, LNA_GAIN)
 
-    plot_power_spectrum(s1_rx, tx_sample_freq, 0, "S1 Received Signal (Post LNA)")
-    plot_power_spectrum(m1_rx, tx_sample_freq, 0,"M1 Received Signal (Post LNA)")
-    plot_power_spectrum(l1_rx, tx_sample_freq, 0,"L1 Received Signal (Post LNA)")
+    # plot_power_spectrum(s1_rx, tx_sample_freq, 0, "S1 Received Signal (Post LNA)")
+    # plot_power_spectrum(m1_rx, tx_sample_freq, 0,"M1 Received Signal (Post LNA)")
+    # plot_power_spectrum(l1_rx, tx_sample_freq, 0,"L1 Received Signal (Post LNA)")
 
     # Downconversion to IF
     s1_rx_IF = RF_downconversion(s1_rx, N_S1, tx_sample_freq, rf_freq_0) # DOWNCONVERSION USES TX SAMPLE RATE?
     m1_rx_IF = RF_downconversion(m1_rx, N_M1, tx_sample_freq, rf_freq_0)
     l1_rx_IF = RF_downconversion(l1_rx, N_L1, tx_sample_freq, rf_freq_0)
 
-    plot_power_spectrum(s1_rx_IF, tx_sample_freq, 0,"S1 Received Signal (IF)")
-    plot_power_spectrum(m1_rx_IF, tx_sample_freq, 0,"M1 Received Signal (IF)")
-    plot_power_spectrum(l1_rx_IF, tx_sample_freq, 0,"L1 Received Signal (IF)")
+    # plot_power_spectrum(s1_rx_IF, tx_sample_freq, 0,"S1 Received Signal (IF)")
+    # plot_power_spectrum(m1_rx_IF, tx_sample_freq, 0,"M1 Received Signal (IF)")
+    # plot_power_spectrum(l1_rx_IF, tx_sample_freq, 0,"L1 Received Signal (IF)")
 
     # Downconversion to BB
     s1_rx_BB = IF_downconversion(s1_rx_IF, N_S1, tx_sample_freq, if_freq_s1)
     m1_rx_BB = IF_downconversion(m1_rx_IF, N_M1, tx_sample_freq, if_freq_m1)
     l1_rx_BB = IF_downconversion(l1_rx_IF, N_L1, tx_sample_freq, if_freq_l1)
-    plot_power_spectrum(s1_rx_BB, tx_sample_freq, 0, "S1 Received Signal (BB)")
-    plot_power_spectrum(m1_rx_BB, tx_sample_freq, 0, "M1 Received Signal (BB)")
-    plot_power_spectrum(l1_rx_BB, tx_sample_freq, 0, "L1 Received Signal (BB)")
+    # plot_power_spectrum(s1_rx_BB, tx_sample_freq, 0, "S1 Received Signal (BB)")
+    # plot_power_spectrum(m1_rx_BB, tx_sample_freq, 0, "M1 Received Signal (BB)")
+    # plot_power_spectrum(l1_rx_BB, tx_sample_freq, 0, "L1 Received Signal (BB)")
 
     # Pulse Compression (Matched Filter)
 

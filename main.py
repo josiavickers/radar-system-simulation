@@ -69,7 +69,9 @@ def main():
     m1.plot_power_spectrum()
 
     # M1 received signal
-    m1.apply_channel(RX_ATTENUATION, m1_delay_samples, tx_sample_freq)
+    m1.apply_channel(RX_ATTENUATION, m1_delay_samples, tx_sample_freq) 
+    # WHY SHOULD RX HAVE LOWER SAMPLING RATE? SEEMS TO HALF OUR SPECTRUM
+    # AND RUINS PULSE COMPRESSION RESULTS
     m1.plot_power_spectrum()
 
     # M1 LNA

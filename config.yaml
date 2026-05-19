@@ -3,7 +3,6 @@ app:
 
 params:
   sample_freq: 77760000 # 77.76 MHz
-  #sample_freq: 5000000000 # 5GHz For demo purposes
 
 # Standard Operation Mode - Operation Mode 3NM - 24NM
 pulse_shape:

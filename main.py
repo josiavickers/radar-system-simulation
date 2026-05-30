@@ -1,5 +1,7 @@
 from load_config import *
-from BasebandSignal import *
+from signal_class import *
+from signal_proc import *
+from plotting import *
 
 PA_GAIN = 1
 LNA_GAIN = 30 # dB
@@ -55,39 +57,61 @@ def main():
     '''
     M1 Medium Pulse
     '''
-    # M1 BB signal and windowing
-    m1 = BasebandSignal(m1_amplitude, tx_sample_freq, 0, m1_duration, m1_bandwidth, m1_kaiser_beta, "M1")
-    m1.plot_bb_time_signal()
-    m1.plot_power_spectrum()
+    # M1 BB signal
+    m1 = Pulse(tx_sample_freq,0,m1_duration,m1_amplitude,m1_bandwidth,"M1")
+    t_samples, t = m1.get_time_samples()
+    f_samples, f = m1.get_freq_samples()
+    plot_time_signal(t_samples, t,"M1")
+    plot_power_spectrum(f_samples, f,"M1")
+
+    # Windowing
+    m1.update_samples(window_function(t_samples, m1_kaiser_beta))
+    t_samples, t = m1.get_time_samples()
+    tx_pulse_compression_samples = t_samples # save for pulse compression
+    f_samples, f = m1.get_freq_samples()
+    plot_time_signal(t_samples, t,"M1")
+    plot_power_spectrum(f_samples, f,"M1")
 
     # M1 IF upconversion
     m1.upconversion(if_freq_m1)
-    m1.plot_power_spectrum()
+    f_samples, f = m1.get_freq_samples()
+    plot_power_spectrum(f_samples, f,"M1")
 
     # M1 RF upconversion
     m1.upconversion(rf_freq_0)
-    m1.plot_power_spectrum()
+    f_samples, f = m1.get_freq_samples()
+    plot_power_spectrum(f_samples, f,"M1")
 
     # M1 received signal
-    m1.apply_channel(RX_ATTENUATION, m1_delay_samples, tx_sample_freq) 
-    # WHY SHOULD RX HAVE LOWER SAMPLING RATE? SEEMS TO HALF OUR SPECTRUM
-    # AND RUINS PULSE COMPRESSION RESULTS
-    m1.plot_power_spectrum()
+    t_samples, t = m1.get_time_samples()
+    m1.update_samples(apply_channel(t_samples,RX_ATTENUATION,m1_delay_samples))
+
+    f_samples, f = m1.get_freq_samples()
+    plot_power_spectrum(f_samples, f,"M1")
+
+    t_samples, t = m1.get_time_samples() # HERE WE HAVE AN ERROR
+    plot_time_signal(t_samples, t,"M1")
 
     # M1 LNA
-    m1.linear_gain(LNA_GAIN)
-    m1.plot_power_spectrum()
+    t_samples, t = m1.get_time_samples()
+    m1.update_samples(linear_gain(t_samples,LNA_GAIN))
+    f_samples, f = m1.get_freq_samples()
+    plot_power_spectrum(f_samples, f,"M1")
 
     # M1 downconversion to IF
     m1.downconversion(rf_freq_0)
-    m1.plot_power_spectrum()
+    f_samples, f = m1.get_freq_samples()
+    plot_power_spectrum(f_samples, f,"M1")
 
     # M1 downconversion to BB
     m1.downconversion(if_freq_m1)
-    m1.plot_power_spectrum()
+    f_samples, f = m1.get_freq_samples()
+    plot_power_spectrum(f_samples, f,"M1")
 
     # Pulse compression
-    m1.matched_filter()
+    # t_samples, t = m1.get_time_samples()
+    # plot_time_signal(t_samples, t,"M1")
+    pulse_compression(tx_pulse_compression_samples, t_samples, tx_sample_freq, "M1")
 
 if __name__ == "__main__":
     main()

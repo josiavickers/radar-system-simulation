@@ -3,6 +3,7 @@ from signal_class import *
 from signal_proc import *
 from plotting import *
 from filter import *
+from power_amp import *
 from scipy import signal
 
 PA_GAIN = 1
@@ -76,6 +77,22 @@ def main():
     m1.upconversion(rf_freq_0)
     m1_f_samples, m1_f = m1.get_freq_samples()
     plot_power_spectrum(m1_f_samples, m1_f,"RF M1")
+
+    # POWER AMPLIFIER
+    # Apply Rapp model
+    g = 1.5
+    A_sat = 1.0
+    p = 2.0
+
+    m1_t_samples, m1_t = m1.get_time_samples()
+    pa_input = m1_t_samples.copy()
+    m1.update_samples(rapp_model(m1_t_samples, g, A_sat, p))
+
+    m1_t_samples, m1_t = m1.get_time_samples()
+    plot_time_signal(m1_t_samples, m1_t,"PA M1")
+    m1_f_samples, m1_f = m1.get_freq_samples()
+    plot_power_spectrum(m1_f_samples, m1_f,"PA M1")
+    plot_am_am_curve(pa_input, m1_t_samples, g)
 
     # M1 received signal
     m1_t_samples, m1_t = m1.get_time_samples()

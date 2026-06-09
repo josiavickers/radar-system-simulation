@@ -18,6 +18,7 @@ class Signal:
 
     def update_samples(self, samples):
         self.samples = samples
+        self.t = np.arange(len(samples))/self.fs
 
     def get_time_samples(self):
         return self.samples, self.t

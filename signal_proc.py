@@ -12,9 +12,7 @@ def window_function(samples, kaiser_beta):
 
 def linear_gain(samples, gain_dB):
     gain_amp = 10**(gain_dB / 20)
-    samples *= gain_amp
-
-    return samples
+    return samples * gain_amp
 
 def apply_time_delay(samples, delay_samples):
     zeros = np.zeros(delay_samples, dtype=samples.dtype)

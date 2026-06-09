@@ -7,13 +7,13 @@ PA_GAIN = 1
 LNA_GAIN = 30 # dB
 RX_ATTENUATION = -80 # received signal attenuation dB
 
-def zero_pad(signal, target_length):
-    pad_total = target_length - len(signal)
-    pad_left = pad_total // 2
-    pad_right = pad_total - pad_left
+# def zero_pad(signal, target_length):
+#     pad_total = target_length - len(signal)
+#     pad_left = pad_total // 2
+#     pad_right = pad_total - pad_left
 
-    signal_padded = np.pad(signal, (pad_left, pad_right), mode='constant')
-    return signal_padded
+#     signal_padded = np.pad(signal, (pad_left, pad_right), mode='constant')
+#     return signal_padded
 
 def main():
     config = load_config("config.yaml")
@@ -61,56 +61,60 @@ def main():
     m1 = Pulse(tx_sample_freq,0,m1_duration,m1_amplitude,m1_bandwidth,"M1")
     t_samples, t = m1.get_time_samples()
     f_samples, f = m1.get_freq_samples()
+
     plot_time_signal(t_samples, t,"M1")
     plot_power_spectrum(f_samples, f,"M1")
 
     # Windowing
     m1.update_samples(window_function(t_samples, m1_kaiser_beta))
     t_samples, t = m1.get_time_samples()
-    tx_pulse_compression_samples = t_samples # save for pulse compression
+    tx_pulse_compression_samples = t_samples.copy() # save for pulse compression
     f_samples, f = m1.get_freq_samples()
-    plot_time_signal(t_samples, t,"M1")
-    plot_power_spectrum(f_samples, f,"M1")
+    plot_time_signal(t_samples, t,"Windowed M1")
+    plot_power_spectrum(f_samples, f,"Windowed M1")
 
     # M1 IF upconversion
     m1.upconversion(if_freq_m1)
     f_samples, f = m1.get_freq_samples()
-    plot_power_spectrum(f_samples, f,"M1")
+    plot_power_spectrum(f_samples, f,"IF M1")
 
     # M1 RF upconversion
     m1.upconversion(rf_freq_0)
     f_samples, f = m1.get_freq_samples()
-    plot_power_spectrum(f_samples, f,"M1")
+    plot_power_spectrum(f_samples, f,"RF M1")
 
     # M1 received signal
     t_samples, t = m1.get_time_samples()
     m1.update_samples(apply_channel(t_samples,RX_ATTENUATION,m1_delay_samples))
 
     f_samples, f = m1.get_freq_samples()
-    plot_power_spectrum(f_samples, f,"M1")
-
-    t_samples, t = m1.get_time_samples() # HERE WE HAVE AN ERROR
-    plot_time_signal(t_samples, t,"M1")
+    plot_power_spectrum(f_samples, f,"Rx M1")
+    t_samples, t = m1.get_time_samples() 
+    plot_time_signal(t_samples, t,"Rx M1")
 
     # M1 LNA
     t_samples, t = m1.get_time_samples()
     m1.update_samples(linear_gain(t_samples,LNA_GAIN))
+
+    t_samples, t = m1.get_time_samples() 
+    plot_time_signal(t_samples, t,"LNA M1")
     f_samples, f = m1.get_freq_samples()
-    plot_power_spectrum(f_samples, f,"M1")
+    plot_power_spectrum(f_samples, f,"LNA M1")
 
     # M1 downconversion to IF
     m1.downconversion(rf_freq_0)
     f_samples, f = m1.get_freq_samples()
-    plot_power_spectrum(f_samples, f,"M1")
+    plot_power_spectrum(f_samples, f,"IF M1")
 
     # M1 downconversion to BB
     m1.downconversion(if_freq_m1)
+
     f_samples, f = m1.get_freq_samples()
-    plot_power_spectrum(f_samples, f,"M1")
+    plot_power_spectrum(f_samples, f,"BB M1")
 
     # Pulse compression
-    # t_samples, t = m1.get_time_samples()
-    # plot_time_signal(t_samples, t,"M1")
+    t_samples, t = m1.get_time_samples()
+    plot_time_signal(t_samples, t,"BB M1")
     pulse_compression(tx_pulse_compression_samples, t_samples, tx_sample_freq, "M1")
 
 if __name__ == "__main__":

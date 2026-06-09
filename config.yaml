@@ -2,7 +2,8 @@ app:
   name: RadarSystemSimulation
 
 params:
-  sample_freq: 77760000 # 77.76 MHz
+  rx_sample_freq: 77760000 # 77.76 MHz
+  tx_sample_freq: 155520000 # 155.52 MHz
 
 # Standard Operation Mode - Operation Mode 3NM - 24NM
 pulse_shape:

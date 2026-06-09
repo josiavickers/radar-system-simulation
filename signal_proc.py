@@ -1,6 +1,14 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+def zero_pad(signal, target_length):
+    pad_total = target_length - len(signal)
+    pad_left = pad_total // 2
+    pad_right = pad_total - pad_left
+
+    signal_padded = np.pad(signal, (pad_left, pad_right), mode='constant')
+    return signal_padded
+
 def window_function(samples, kaiser_beta):
     window = np.kaiser(len(samples), kaiser_beta)
     I = np.real(samples)*window

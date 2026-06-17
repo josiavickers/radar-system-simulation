@@ -24,12 +24,12 @@ def plot_power_spectrum(samples, f, name):
     plt.grid(True)
     plt.show()
 
-def plot_am_am_curve(input, output, gain):
+def plot_am_am_curve(input, output, gain, model_name):
     am_in = np.abs(input)
     am_out = np.abs(output)
 
     plt.figure()
-    plt.plot(am_in, am_out, label="Rapp AM/AM")
+    plt.plot(am_in, am_out, label=model_name)
     plt.plot(am_in, gain * am_in, "--", label="Ideal linear gain")
     # plt.axhline(A_sat, linestyle=":", label=r"$A_{sat}$")
 
@@ -39,3 +39,24 @@ def plot_am_am_curve(input, output, gain):
     plt.grid(True)
     plt.legend()
     plt.show()
+
+# def plot_am_pm_curve(input, output, name="AM/PM"):
+#     # Magnitudes
+#     am_in = np.abs(input)
+
+#     # Phase difference
+#     phase_in = np.angle(input)
+#     phase_out = np.angle(output)
+
+#     # Compute AM/PM and unwrap
+#     am_pm = np.unwrap(phase_out - phase_in)
+
+#     plt.figure()
+#     plt.plot(am_in, am_pm, '.', markersize=2)
+
+#     plt.xlabel("Input amplitude |x|")
+#     plt.ylabel("Phase distortion (rad)")
+#     plt.title(f"{name} Curve")
+#     plt.grid(True)
+
+#     plt.show()

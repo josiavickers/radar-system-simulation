@@ -35,7 +35,7 @@ def plot_am_am_curve(input, output, gain, model_name):
 
     plt.xlabel("Input amplitude |x|")
     plt.ylabel("Output amplitude |y|")
-    plt.title("Rapp Model AM/AM Characteristic")
+    plt.title(f"{model_name} Characteristic")
     plt.grid(True)
     plt.legend()
     plt.show()

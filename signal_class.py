@@ -6,11 +6,13 @@ class Signal:
     fc: float = 0.0 # carrier frequency
     t_sim: float # duration time
     t: np.array # time vector
+    window: np.array # window function
 
     def __init__(self, fs, fc, t_sim):  
         self.fs = fs
         self.fc = fc
         self.t_sim = t_sim
+        self.window = None
 
         N = int(fs*t_sim) # number of samples
         self.t = np.arange(N)/fs # time vector
@@ -26,13 +28,19 @@ class Signal:
     def get_freq_samples(self):
         spectrum = np.fft.fftshift(np.fft.fft(self.samples)) # freq spectrum envelope
         N = len(self.samples) # number of samples
-        spectrum_amp = 2*spectrum/N # corrected spectrum amplitudes # IS THIS RIGHT?
+
+        if self.window is None:
+            sum = N
+        else:
+            sum = self.window.sum()
+
+        spectrum_watts = (np.abs(spectrum) / sum)**2 # spectrum in Watts
 
         # Generate frequency axis
         f = np.fft.fftshift(np.fft.fftfreq(N, d=1/self.fs)) + self.fc
 
         # Convert to dBm
-        power_dbm = 20 * np.log10(np.abs(spectrum_amp) + 1e-12) + 30 # small epsilon to avoid log(0)
+        power_dbm = 10 * np.log10(spectrum_watts + 1e-12) + 30 # small epsilon to avoid log(0)
 
         return power_dbm, f
 
@@ -54,3 +62,11 @@ class Pulse(Signal):
     
     def downconversion(self, fc):
         self.fc = self.fc - fc
+    
+    def apply_window(self, kaiser_beta):
+        self.window = np.kaiser(len(self.samples), kaiser_beta)
+        I = np.real(self.samples)*self.window
+        Q = np.imag(self.samples)*self.window
+
+        windowed_samples = I + 1j*Q # windowed signal
+        self.update_samples(windowed_samples)

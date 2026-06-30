@@ -58,20 +58,20 @@ def main():
     m1_f_samples, m1_f = m1.get_freq_samples()
 
     #plot_time_signal(m1_t_samples, m1_t,"M1")
-    #plot_power_spectrum(m1_f_samples, m1_f,"M1")
+    plot_power_spectrum(m1_f_samples, m1_f,"M1")
 
     # Windowing
-    m1.update_samples(window_function(m1_t_samples, m1_kaiser_beta))
+    m1.apply_window(m1_kaiser_beta)
     m1_t_samples, m1_t = m1.get_time_samples()
     m1_tx_pulse_compression_samples = m1_t_samples.copy() # save for pulse compression
     m1_f_samples, m1_f = m1.get_freq_samples()
     plot_time_signal(m1_t_samples, m1_t,"Windowed M1")
-    #plot_power_spectrum(m1_f_samples, m1_f,"Windowed M1")
+    plot_power_spectrum(m1_f_samples, m1_f,"Windowed M1")
 
     # M1 IF upconversion
     m1.upconversion(if_freq_m1)
     m1_f_samples, m1_f = m1.get_freq_samples()
-    #plot_power_spectrum(m1_f_samples, m1_f,"IF M1")
+    plot_power_spectrum(m1_f_samples, m1_f,"IF M1")
 
     # M1 RF upconversion
     m1.upconversion(rf_freq_0)
@@ -86,14 +86,14 @@ def main():
     m1_t_samples, m1_t = m1.get_time_samples()
     pa_input = m1_t_samples.copy()
     #m1.update_samples(rapp_model(pa_input, g, A_sat, p))
-    m1.update_samples(saleh_model(pa_input, g))
+    #m1.update_samples(saleh_model(pa_input, g))
 
     m1_t_samples, m1_t = m1.get_time_samples()
-    plot_time_signal(m1_t_samples, m1_t,"PA M1")
+    #plot_time_signal(m1_t_samples, m1_t,"PA M1")
     m1_f_samples, m1_f = m1.get_freq_samples()
-    plot_power_spectrum(m1_f_samples, m1_f,"PA M1")
+    #plot_power_spectrum(m1_f_samples, m1_f,"PA M1")
     #plot_am_am_curve(pa_input, m1_t_samples, g, "Rapp AM/AM")
-    plot_am_am_curve(pa_input, m1_t_samples, g, "Saleh AM/AM")
+    #plot_am_am_curve(pa_input, m1_t_samples, g, "Saleh AM/AM")
     #plot_am_pm_curve(pa_input, m1_t_samples, "Saleh AM/PM")
 
     # M1 received signal
@@ -112,12 +112,12 @@ def main():
     m1_t_samples, m1_t = m1.get_time_samples() 
     #plot_time_signal(m1_t_samples, m1_t,"LNA M1")
     m1_f_samples, m1_f = m1.get_freq_samples()
-    #plot_power_spectrum(m1_f_samples, m1_f,"LNA M1")
+    plot_power_spectrum(m1_f_samples, m1_f,"LNA M1")
 
     # M1 downconversion to IF
     m1.downconversion(rf_freq_0)
     m1_f_samples, m1_f = m1.get_freq_samples()
-    #plot_power_spectrum(m1_f_samples, m1_f,"IF M1 before filtering")
+    plot_power_spectrum(m1_f_samples, m1_f,"IF M1 before filtering")
 
     m1_t_samples, m1_t = m1.get_time_samples() 
     #plot_time_signal(m1_t_samples, m1_t,"IF M1 before filtering")
@@ -127,13 +127,13 @@ def main():
     m1_t_samples, m1_t = m1.get_time_samples() 
     #plot_time_signal(m1_t_samples, m1_t,"IF M1 after filtering")
     m1_f_samples, m1_f = m1.get_freq_samples()
-    #plot_power_spectrum(m1_f_samples, m1_f,"IF M1 after filtering")
+    plot_power_spectrum(m1_f_samples, m1_f,"IF M1 after filtering")
 
     # M1 downconversion to BB
     m1.downconversion(if_freq_m1)
 
     m1_f_samples, m1_f = m1.get_freq_samples()
-    #plot_power_spectrum(m1_f_samples, m1_f,"BB M1")
+    plot_power_spectrum(m1_f_samples, m1_f,"BB M1")
 
     # Pulse compression
     m1_t_samples, m1_t = m1.get_time_samples()

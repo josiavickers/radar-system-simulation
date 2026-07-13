@@ -1,6 +1,6 @@
 import numpy as np
 
-def rapp_model(x, g, A_sat, p):
+def rapp_model(x, g, A_sat=8.0, p=2.0):
     x = np.asarray(x)
     r = np.abs(x)
 
@@ -8,7 +8,7 @@ def rapp_model(x, g, A_sat, p):
 
     return g * compression * x
 
-def saleh_model(x, g=1.0, alpha_a=1.2, beta_a=0.04,alpha_phi=0.0, beta_phi=9.0):
+def saleh_model(x, g=1.0, alpha_a=2.1587, beta_a=1.1517,alpha_phi=4.0033, beta_phi=9.1040):
     '''
     alpha_phi = 0 - no phase distortion
     when beta_a is low, more linearity

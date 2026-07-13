@@ -6,13 +6,11 @@ class Signal:
     fc: float = 0.0 # carrier frequency
     t_sim: float # duration time
     t: np.array # time vector
-    window: np.array # window function
 
-    def __init__(self, fs, fc, t_sim):  
+    def __init__(self, fs, fc, t_sim):
         self.fs = fs
         self.fc = fc
         self.t_sim = t_sim
-        self.window = None
 
         N = int(fs*t_sim) # number of samples
         self.t = np.arange(N)/fs # time vector
@@ -29,12 +27,7 @@ class Signal:
         spectrum = np.fft.fftshift(np.fft.fft(self.samples)) # freq spectrum envelope
         N = len(self.samples) # number of samples
 
-        if self.window is None:
-            sum = N
-        else:
-            sum = self.window.sum()
-
-        spectrum_watts = (np.abs(spectrum) / sum)**2 # spectrum in Watts
+        spectrum_watts = (np.abs(spectrum) / N)**2 # spectrum in Watts
 
         # Generate frequency axis
         f = np.fft.fftshift(np.fft.fftfreq(N, d=1/self.fs)) + self.fc
@@ -64,9 +57,9 @@ class Pulse(Signal):
         self.fc = self.fc - fc
     
     def apply_window(self, kaiser_beta):
-        self.window = np.kaiser(len(self.samples), kaiser_beta)
-        I = np.real(self.samples)*self.window
-        Q = np.imag(self.samples)*self.window
+        window = np.kaiser(len(self.samples), kaiser_beta)
+        I = np.real(self.samples)*window
+        Q = np.imag(self.samples)*window
 
         windowed_samples = I + 1j*Q # windowed signal
         self.update_samples(windowed_samples)

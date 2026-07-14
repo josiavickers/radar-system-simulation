@@ -81,19 +81,19 @@ def main():
     rf_f, rf_dbm = m1_f, m1_f_samples # save pre-PA snapshot for overlay with PA M1
 
 #################################################################################################################
-    # POWER AMPLIFIER
+    # POWER AMPLIFIER MODELLING
     g = 1.0
 
     m1_t_samples, m1_t = m1.get_time_samples()
     pa_input = m1_t_samples.copy()
 
-    pa_model = 2
+    pa_model = 1
     if pa_model == 1: # Rapp Model
         model_name = "Rapp"
-        m1.update_samples(rapp_model(pa_input, g, A_sat=5.0, p=10.0))
+        m1.update_samples(rapp_model(pa_input, g, A_sat=7.0, p=10.0))
     elif pa_model == 2: # Saleh Model
         model_name = "Saleh"
-        m1.update_samples(saleh_model(pa_input, g, alpha_a=1.5, beta_a=0.05, alpha_phi=10.0))
+        m1.update_samples(saleh_model(pa_input, g, alpha_a=1.05, beta_a=0.01, alpha_phi=10.0, beta_phi= 20.0))
 
     m1_t_samples, m1_t = m1.get_time_samples()
     m1_f_samples, m1_f = m1.get_freq_samples()
@@ -103,7 +103,11 @@ def main():
     ])
     plot_power_spectrum_grid(tx_spectrum_groups, "M1 TX Path Spectra")
     plot_am_am_curve(pa_input, m1_t_samples, g, f"{model_name} AM/AM")
-    plot_am_pm_curve(pa_input, m1_t_samples, f"{model_name} AM/PM")
+    plot_am_am_curve_dbm(pa_input, m1_t_samples, g, f"{model_name} AM/AM")
+
+    if pa_model != 1: # Anything but Rapp Model
+        plot_am_pm_curve(pa_input, m1_t_samples, f"{model_name} AM/PM")
+        plot_am_pm_curve_dbm(pa_input, m1_t_samples, f"{model_name} AM/PM")
 #################################################################################################################
 
     rx_spectrum_groups = []

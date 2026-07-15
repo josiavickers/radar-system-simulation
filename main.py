@@ -87,13 +87,13 @@ def main():
     m1_t_samples, m1_t = m1.get_time_samples()
     pa_input = m1_t_samples.copy()
 
-    pa_model = 1
+    pa_model = 2
     if pa_model == 1: # Rapp Model
         model_name = "Rapp"
-        m1.update_samples(rapp_model(pa_input, g, A_sat=7.0, p=10.0))
+        m1.update_samples(rapp_model(pa_input, g, A_sat=2.0, p=10.0))
     elif pa_model == 2: # Saleh Model
         model_name = "Saleh"
-        m1.update_samples(saleh_model(pa_input, g, alpha_a=1.05, beta_a=0.01, alpha_phi=10.0, beta_phi= 20.0))
+        m1.update_samples(saleh_model(pa_input, g, alpha_a=1.05, beta_a=0.02, alpha_phi=10.0, beta_phi= 10.0))
 
     m1_t_samples, m1_t = m1.get_time_samples()
     m1_f_samples, m1_f = m1.get_freq_samples()

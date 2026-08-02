@@ -35,7 +35,7 @@ def pulse_compression(tx_samples, rx_samples, fs, name, plot=True):
     h = np.conj(tx_samples[::-1]) # time-reversed complex conjugate of Tx signal
     y = np.convolve(rx_samples, h, mode="full")
     power = np.abs(y)**2
-    power_dbm = 10 * np.log10(power + 1e-12) + 30
+    power_dbm = 10 * np.log10(power) + 30
 
     if plot:
         t_mf = np.arange(len(y)) / fs # time axis

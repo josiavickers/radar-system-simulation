@@ -33,7 +33,7 @@ class Signal:
         f = np.fft.fftshift(np.fft.fftfreq(N, d=1/self.fs)) + self.fc
 
         # Convert to dBm
-        power_dbm = 10 * np.log10(spectrum_watts + 1e-12) + 30 # small epsilon to avoid log(0)
+        power_dbm = 10 * np.log10(spectrum_watts) + 30
 
         return power_dbm, f
 

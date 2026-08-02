@@ -50,6 +50,15 @@ def main():
     rf_freq_0 = config["xband"]["rf_conversion"]["rf_freq_channel_0"]
 
     '''
+    S1 Short Pulse
+    '''
+    # # S1 BB signal
+    # s1 = Pulse(tx_sample_freq,0,s1_duration,s1_amplitude,s1_bandwidth,"S1")
+    # s1_t_samples, s1_t = s1.get_time_samples()
+
+    # plot_time_signal(s1_t_samples, s1_t,"S1")
+
+    '''
     M1 Medium Pulse
     '''
     tx_spectrum_groups = []
@@ -59,7 +68,7 @@ def main():
     m1_t_samples, m1_t = m1.get_time_samples()
     m1_f_samples, m1_f = m1.get_freq_samples()
 
-    #plot_time_signal(m1_t_samples, m1_t,"M1")
+    plot_time_signal(m1_t_samples, m1_t,"M1")
     tx_spectrum_groups.append([(m1_f, m1_f_samples, "M1")])
 
     # Windowing

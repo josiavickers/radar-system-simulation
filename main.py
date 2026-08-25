@@ -96,7 +96,7 @@ def main():
     m1_t_samples, m1_t = m1.get_time_samples()
     pa_input = m1_t_samples.copy()
 
-    pa_model = 2
+    pa_model = 1
     if pa_model == 1: # Rapp Model
         model_name = "Rapp"
         m1.update_samples(rapp_model(pa_input, g, A_sat=2.0, p=10.0))

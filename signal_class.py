@@ -76,8 +76,8 @@ class Pulse(Signal):
             I = I + d
 
         # Gain and phase mismatch 4*IRR = g^2 + p^2
-        g = 0#0.0141
-        p = 0#0.0141
+        g = 0.0141
+        p = 0.0141
 
         # Multiply each line with its LO and sum: real RF signal at f_IF + f_lo
         self.samples = (1+g) * I * np.cos(2 * np.pi * f_lo * self.t + p) - Q * np.sin(2 * np.pi * f_lo * self.t)

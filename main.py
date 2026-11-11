@@ -154,8 +154,7 @@ def main():
     # RF upconversion
     group = []
     for name, pulse in cases.items():
-        #pulse.iq_modulator(rf_freq_0, LO_LEAKAGE_DBC)
-        pulse.iq_modulator(rf_freq_0, None)
+        pulse.iq_modulator(rf_freq_0, LO_LEAKAGE_DBC)
         f_samples, f = pulse.get_freq_samples(SPECTRUM_SPAN)
 
         if name != "Nonlinear":

@@ -1,5 +1,5 @@
 RESULTS LOG
-Date: 2026-11-11 16:27:54
+Date: 2026-11-11 16:32:43
 Pulse: L1 (25.0 us, 5.0 MHz, amplitude 10)
 PA model: Rapp
 ILC: K = 500, target gain = 0.570, fully linear (peak = 95 % of PA max output)
@@ -9,16 +9,16 @@ LO leakage: -22 dBc
 PA output spectrum (mainlobe = chirp band)
 KPI                        Ideal   Nonlinear  Predistorted  NL - Ideal  PD - Ideal   PD - NL
 --------------------------------------------------------------------------------------------
-Mainlobe peak (dBm)        23.01       18.53         18.13       -4.48       -4.88     -0.40
-PSL (dB)                  -30.68      -25.42        -30.68        5.27       -0.00     -5.27
-ISL (dB)                  -39.00      -35.63        -39.00        3.37       -0.00     -3.37
+Mainlobe peak (dBm)        23.07       18.53         18.14       -4.54       -4.93     -0.39
+PSL (dB)                  -21.92      -20.62        -21.22        1.30        0.70     -0.60
+ISL (dB)                  -34.53      -33.13        -34.45        1.41        0.08     -1.32
 
 Pulse compression output (mainlobe = peak to first nulls)
 KPI                        Ideal   Nonlinear  Predistorted  NL - Ideal  PD - Ideal   PD - NL
 --------------------------------------------------------------------------------------------
-Mainlobe peak (dBm)       129.39      126.41        124.51       -2.98       -4.88     -1.90
-PSL (dB)                  -65.13      -26.90        -65.13       38.23        0.00    -38.23
-ISL (dB)                  -50.46      -26.98        -50.46       23.47        0.00    -23.47
+Mainlobe peak (dBm)       129.45      126.42        124.54       -3.03       -4.91     -1.88
+PSL (dB)                  -65.07      -26.86        -63.84       38.22        1.23    -36.99
+ISL (dB)                  -50.36      -26.94        -50.19       23.42        0.17    -23.25
 
 AM-AM 1 dB compression point (input / output)
   Nonlinear     45.56 dBm / 44.56 dBm
@@ -27,4 +27,4 @@ AM-AM 1 dB compression point (input / output)
 AM-PM total phase deviation (relative to the original pulse)
 KPI                        Ideal   Nonlinear  Predistorted  NL - Ideal  PD - Ideal   PD - NL
 --------------------------------------------------------------------------------------------
-Total phase dev. (deg)      0.00       16.78          5.27       16.78        5.27    -11.51
+Total phase dev. (deg)      0.00       17.05          9.27       17.05        9.27     -7.78

@@ -1,0 +1,113 @@
+%*********************************************************************************
+% Hamburg University of Applied Sciences (HAW Hamburg).
+%
+% LaTeX template for bachelor's and master's theses in the faculty EMI.
+% Derived from the template maintained by Prof. Dr. Thomas Lehmann et al.
+% --------------------------------------------------------------------------------
+% Version: 2026-10
+% Maintained by: Prof. Dr. Marc Hensel (www.haw-hamburg.de/person/marc-hensel)
+%*********************************************************************************
+
+\documentclass[a4paper,oneside,table]{scrreprt}   % Further configurations in Preamble/Layout.tex
+\usepackage{scrhack}                              % Fix compatibility issues of older packages with KOMA script
+\input{Preamble/SettingsCommands}                 % Commands processing your input below
+
+%*********************************************************************************
+%*                                                                               *
+%*                  Please enter your input from here on.                        *
+%*                                                                               *
+%*********************************************************************************
+
+% Document language, degree course, date of submission, and non-disclosure
+\Language{EN}                       % Thesis written in German ("DE") or English ("EN")
+\DegreeCourse{IE}                   % Your bachelor's or master's degree course ("EuI", "REE", "IE", or "MT" for bachelors; "M-A", "M-ICE", or "M-MES" for masters).
+\Confidential{0}                    % Is thesis confidential (1, "Sperrvermerk") or public (0)?  TODO: confirm with NACOS Marine whether a Sperrvermerk is required.
+\SubmittedOn{TODO: Einreichungsdatum}
+
+% Layout settings
+\SingleSidedPrint{1}                % Print single-sided (1) or double-sided (0). Clarify with your examiners, which version they prefer.
+\TitleFontSize{normal}              % Title font size on the front page ("large", "normal", or "small").
+
+% Student and examiners.
+% For each examiner, provide "male" or "female" for correct gendering (such as "Betreuerin" or "Betreuer").
+\Student{Josia Vickers}
+\Supervisor{Prof. Dr.-Ing. Marc Hensel}{male}
+\SecondExaminer{TODO: Zweitgutachter}{male}
+
+% Thesis title, keywords, and abstract in both languages: {German}{English}.
+% Both languages are required for abstract page.
+\Titles
+	{TODO: deutscher Titel}
+	{TODO: English title}
+\Keywords
+	{TODO: deutsche Schlagworte}
+	{TODO: English keywords}
+\Abstracts
+	{TODO: deutsche Kurzfassung}
+	{TODO: English abstract}
+
+% Enable (1) or disable (0) pages for the lists of figures, tables, listings, and abbreviations.
+\ListOfFigures{1}
+\ListOfTables{1}
+\ListOfListings{0}
+\ListOfAbbreviations{1}
+
+% Files with chapters and appendices.
+% Please create, name, and modify files in the appropriate folders to your needs.
+\Chapters{
+	\input{Chapters/Introduction}
+	\input{Chapters/Fundamentals}
+	\input{Chapters/RequirementsAnalysis}
+	\input{Chapters/ConceptAndDesign}
+	\input{Chapters/Implementation}
+	\input{Chapters/Evaluation}
+	\input{Chapters/ConclusionAndOutlook}
+}
+\Appendix{
+	\input{Appendix/Appendix}
+}
+
+%*********************************************************************************
+%*                                                                               *
+%*       You should stop here. There is NO NEED to modify the code below.        *
+%*                                                                               *
+%*********************************************************************************
+
+%---------------------------------------------------------------------------------
+% Preamble (layout and packages)
+%---------------------------------------------------------------------------------
+
+\input{Preamble/Layout}
+\input{Preamble/Packages}
+
+%---------------------------------------------------------------------------------
+% Document
+%---------------------------------------------------------------------------------
+
+\begin{document}
+
+% Titel page (front cover)
+\TitleFront
+
+% Second titel page, abstracts, table of contents, and lists (page numbering: i, ii, iii, iv, ...)
+\pagenumbering{roman}
+\TitleInside
+\input{SpecialPages/Abstract}\cleardoublepage
+\tableofcontents\cleardoublepage
+\PrintLists
+
+% Chapters (page numbering: 1, 2, 3, 4, ...)
+\pagenumbering{arabic}
+\TheChapters
+
+% Bibliography (style, e.g.: plaindin, dinat, plain)
+\bibliographystyle{plaindin}
+\bibliography{SpecialPages/Bibliography}
+
+% Appendix and declarations (usage of AI, declaration of authorship)
+\appendix
+\TheAppendix
+\input{SpecialPages/DeclarationOnUseOfAI}
+\input{SpecialPages/DeclarationOfAuthorship}
+
+\end{document}

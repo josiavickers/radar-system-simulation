@@ -1,0 +1,126 @@
+%---------------------------------------------------------------------------------
+% Language, fonts, and encoding
+%---------------------------------------------------------------------------------
+
+\usepackage{babel}                                % Check spelling, language used for lists (e.g., list of figures) and bibliography
+\DE
+	{\babelprovide[import,main]{ngerman}}
+	{\babelprovide[import,main]{english}}
+\usepackage[T1]{fontenc}                          % Font
+\usepackage[utf8]{inputenc}                       % Encoding (e.g., German special characters)
+
+\usepackage{courier}                              % Courier as \ttdefault
+\usepackage{anyfontsize}                          % Use font cmr in any size
+\setkomafont{disposition}{\normalfont\bfseries}   % Headings in normal font
+
+%---------------------------------------------------------------------------------
+% Figures and floats
+%---------------------------------------------------------------------------------
+
+% Figures
+\usepackage{graphicx}
+\usepackage{pdfpages}               % Include PDF as figure
+
+% General floats
+\usepackage{subcaption}             % Multiple floats (a), (b), ... next to each other
+\usepackage{floatflt}               % Surround figures and tables by text
+\usepackage{tabularx}               % Automatic line break in tables
+\usepackage{multicol,colortbl}      % Change row color in tables
+\usepackage{booktabs}               % Tables: \toprule, \bottomrule, \midrule
+
+%---------------------------------------------------------------------------------
+% TikZ drawings
+%---------------------------------------------------------------------------------
+
+\usepackage{tikz}
+\usetikzlibrary{arrows,positioning,shapes.geometric}
+\tikzstyle{every picture}=[>=latex,font=\footnotesize]
+
+%---------------------------------------------------------------------------------
+% Colors and listings (with examples for C++ and Python)
+%---------------------------------------------------------------------------------
+
+% Colors for listings
+\usepackage[most]{tcolorbox}
+\definecolor{background}{rgb}{.95,.95,.95}    % Background
+\definecolor{strings}{rgb}{0.,0.,0.}          % Strings
+\definecolor{comments}{rgb}{0.,0.,0.}         % Comments
+\definecolor{keywords}{rgb}{0.,0.,0.}         % Keywords
+
+% Listings
+\usepackage{listings}
+
+% Default color scheme (here: C++)
+\lstset{												
+	language=C++,
+	basicstyle=\footnotesize\sffamily,
+	breaklines,
+	tabsize=2,
+	showstringspaces=false,
+	backgroundcolor=\color{background},
+	rulecolor=\color{black},
+	keywordstyle=\color{keywords}\bfseries,
+	stringstyle=\color{strings},
+	commentstyle=\color{comments},
+	morecomment=[s][\color{comments}]{/**}{*/}
+}
+
+%---------------------------------------------------------------------------------
+% Math and units
+%---------------------------------------------------------------------------------
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm} 
+\usepackage{ae}
+%\usepackage{dsfont}                % Print number sets symbols (e.g., \mathds{R} for real numbers |R). Good alternative to \mathbb{}.
+\usepackage{eurosym}                % EUR currency symbol
+\usepackage{trfsigns}               % Fourier symbol
+
+\usepackage{siunitx}                % Standard units and number formats
+\DE                                 % Set language
+	{\sisetup{locale = DE}}
+	{\sisetup{locale = US}}
+
+\DeclareSIUnit{\dBc}{dBc}           % Level relative to the carrier (usage: \qty{-40}{\dBc})
+
+%---------------------------------------------------------------------------------
+% PDF, references, and citations
+%---------------------------------------------------------------------------------
+
+% References (links)
+\usepackage[
+	colorlinks=true,
+	linkcolor=black,
+	citecolor=black,
+	urlcolor=black
+]{hyperref}
+
+% PDF metadata
+\DE{
+	\hypersetup{pdftitle={\TitleDE}, pdfauthor={\TheStudent}, pdfkeywords={\KeywordsDE}}}{
+	\hypersetup{pdftitle={\TitleEN}, pdfauthor={\TheStudent}, pdfkeywords={\KeywordsEN}}}
+
+% URLs and citations
+\usepackage{xurl}                 % Line breaks in URLs
+\usepackage[numbers]{natbib}      % Citation styles
+
+%---------------------------------------------------------------------------------
+% Acronyms and glossary
+%
+% Must be loaded AFTER hyperref. Enable or disable the printed list of
+% abbreviations with \ListOfAbbreviations{1} or {0} in Thesis.tex.
+% Remember to run "makeglossaries Thesis" as part of the build.
+%---------------------------------------------------------------------------------
+
+\usepackage[
+	acronym,                      % Separate list of acronyms
+	nonumberlist,                 % No page numbers behind each entry
+	nopostdot,                    % No dot at the end of a description
+	section=chapter,              % Heading level matches the other lists
+	toc                           % Add the list to the table of contents
+]{glossaries}
+
+\makeglossaries
+\loadglsentries{SpecialPages/Acronyms}

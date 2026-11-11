@@ -1,0 +1,58 @@
+%---------------------------------------------------------------------------------
+% KOMA script document class scrreprt
+%---------------------------------------------------------------------------------
+
+% Double-sided printing
+\ifthenelse{\SingleSided=0}{
+	\KOMAoptions{twoside}{}
+	\KOMAoptions{open=right}{}        % Begin chapters on right side
+}{}
+
+% Table of contents
+\KOMAoption{listof}{totoc}          % Add list of figures and tables to table of contents
+\KOMAoption{bibliography}{totoc}    % Add bibliography to table of contents
+
+% Page layout
+\KOMAoption{DIV}{10}                % Font size (11pt for DIV=10) and relation of margins to area available for texts
+\KOMAoption{BCOR}{5mm}              % Extra margin as binding offset ("Bindungskorrektur", mehr Platz auf Seite der Buchbindung)
+
+% Texts and paragraphs
+\KOMAoption{numbers}{noenddot}      % No dot (.) after chapter numbers
+\KOMAoption{parskip}{half}          % Half space between paragraphs
+
+%---------------------------------------------------------------------------------
+% Header and footer
+%---------------------------------------------------------------------------------
+
+\usepackage[automark,headsepline]{scrlayer-scrpage}
+\clearpairofpagestyles
+\ohead{\textnormal\headmark}
+\automark[section]{chapter}
+\ofoot[\pagemark]{\textnormal\pagemark}
+\pagestyle{scrheadings}
+
+%---------------------------------------------------------------------------------
+% Paragraph and page layout
+%---------------------------------------------------------------------------------
+
+\parindent0pt                       % Paragraphs without text indentation
+\clubpenalty=10000
+\widowpenalty=10000
+\usepackage[inner=4cm,outer=2.5cm,centering]{geometry}
+\usepackage[onehalfspacing]{setspace}
+\usepackage[absolute]{textpos}      % Use absolute coordinates to place tex on title page
+
+% Allow large floats (else they get pushed to the end of the chapter)
+\renewcommand{\floatpagefraction}{.9}
+\renewcommand{\topfraction}{.9}
+\renewcommand{\bottomfraction}{.9}
+\renewcommand{\textfraction}{.1}
+
+%---------------------------------------------------------------------------------
+% Section numbering depth
+%---------------------------------------------------------------------------------
+
+% Number and list subsubsections (needed for the learning-architecture headings
+% under Baseband Predistortion in the theory chapter).
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}

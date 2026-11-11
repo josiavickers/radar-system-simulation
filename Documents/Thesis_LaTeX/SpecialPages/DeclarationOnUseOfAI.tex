@@ -1,0 +1,53 @@
+\cleardoublepage
+\phantomsection
+\label{Declaration:AI}
+\thispagestyle{plain}
+
+\DE{
+
+% German declaration
+% ------------------
+\section*{Erklärung zur Nutzung von KI-Werkzeugen}
+\addcontentsline{toc}{chapter}{Erklärung zur Nutzung von KI-Werkzeugen}
+Hiermit versichere ich, dass ich ausschließlich die in der nachfolgenden Tabelle angegebenen KI-basierten Hilfsmittel auf die dort aufgeführte Art und Weise verwendet habe.
+}{
+
+% English declaration
+% -------------------
+\section*{Declaration on the Use of AI Tools}
+\addcontentsline{toc}{chapter}{Declaration on the Use of AI Tools}
+I hereby declare that I have used no other AI-based tools and for no other purpose than detailed in the table below.
+}
+\vspace*{1em}
+
+% Table
+\begin{table}[h!]
+%	\caption*{AI tools used}
+	\footnotesize
+	\begin{tabularx}{\textwidth}{
+		>{\hsize=0.5\hsize\linewidth=\hsize}X			% Sizes must sum up to number of columns X (here: 0.5 + 1.5 + 0.5 + 1.5 = 4)
+		>{\hsize=1.5\hsize\linewidth=\hsize}X
+		>{\hsize=0.5\hsize\linewidth=\hsize}X
+		>{\hsize=1.5\hsize\linewidth=\hsize}X} \toprule
+		\DE
+			{\textbf{KI-Werkzeug} & \textbf{Verwendet für} & \textbf{Kapitel} & \textbf{Anmerkungen}}
+			{\textbf{AI tool} & \textbf{Used for} & \textbf{Chapters} & \textbf{Remarks}} \\ \toprule
+ChatGPT (GPT-5) &
+Support with literature research: suggestions for German and English search terms regarding modeling approaches and numerical solution methods for the system under investigation, as well as a summary of abstracts for the preliminary selection of relevant publications. &
+2.1--2.3 &
+Accessed in March 2026. The actual research was conducted using specialized databases (e.~g., IEEE Xplore, ScienceDirect). All cited sources were read in their original form; the AI-generated summaries served only for preliminary selection and are not used as sources.
+\\ \midrule
+Claude (Claude Sonnet 5.5) &
+Code generation and debugging assistance for Python helper functions: reading and processing measurement and reference data (pandas), plotting functions for simulation results (matplotlib), and troubleshooting an incorrect unit conversion during data processing. &
+4.2, App.~B &
+The model equations, the implementation of the simulation model, and the evaluation logic were developed without AI assistance. The generated code was reviewed, validated using test datasets, and marked with comments in the source code.
+\\ \midrule
+ChatGPT (GPT-5) &
+Linguistic revision of one's own text drafts: suggestions regarding style and sentence structure, as well as translation of the German summary into English (abstract). &
+1 and 6, abstract &
+Only original texts containing no personal or confidential data were entered. Suggestions were reviewed individually and adopted only in part; technical statements and terminology were not altered by the AI.
+\\ \bottomrule
+	\end{tabularx}
+\end{table}
+
+\cleardoublepage

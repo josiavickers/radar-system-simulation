@@ -1,0 +1,84 @@
+\thispagestyle{empty}
+\hypersetup{pageanchor=false}			% Prevent warning due to cover page without page number
+
+\begin{titlepage}
+\hfuzz=20pt		% Suppress warnings ("emty/full boxes")
+
+% Logo FH Westküste
+\begin{textblock*}{\textwidth}(30mm,28mm)
+  \begin{minipage}[b][0cm][b]{\textwidth}
+    \includegraphics[height=2.1cm]{Figures/Title/Logo_FH_Westkueste}
+  \end{minipage}
+\end{textblock*}
+
+% HAW logo
+\begin{textblock*}{\textwidth}(135mm,32mm)
+  \begin{minipage}[b][0cm][b]{\textwidth}
+    \includegraphics[height=2.25cm]{Figures/Title/Logo_HAW_Hamburg}
+  \end{minipage}
+\end{textblock*}
+
+% Thesis type and author
+\begin{textblock*}{\textwidth}(57mm,72mm)
+  \begin{minipage}[b][0cm][b]{\textwidth}
+    \fontfamily{cmr}\fontsize{10pt}{10pt}\selectfont
+		\MakeUppercase{\ThesisKind}\\
+    \fontfamily{cmr}\fontsize{14pt}{16pt}\selectfont
+		\textbf{\TheStudent}
+  \end{minipage}
+\end{textblock*}
+
+% Title and line
+\begin{textblock*}{\textwidth}(57mm,85mm)
+  \begin{minipage}[b][0cm][t]{0.95\textwidth}
+		\fontfamily{cmr}\TheTitleFontSize\selectfont
+    \begin{flushleft}
+      \textbf{\Title}\\
+      \vspace{0mm}
+      \begin{picture}(10, 2)(6, -10)
+				\linethickness{1mm} 
+				\line(3,0){33}
+      \end{picture}
+    \end{flushleft}
+  \end{minipage}
+\end{textblock*}
+
+% Non-disclosure (confidential thesis)
+\begin{textblock*}{\textwidth}(75mm,170mm)
+  \begin{minipage}[b][0cm][b]{\textwidth}
+		\fontfamily{phv}\fontsize{16pt}{16pt}\selectfont
+		\ifthenelse{\IsConfidential=1}{\DE{-- VERTRAULICH --}{-- CONFIDENTIAL --}}{}
+  \end{minipage}
+\end{textblock*}
+
+% Universities and faculties (German and English)
+\begin{textblock*}{\textwidth}(57mm,215mm)
+  \begin{minipage}[b][0cm][t]{0.95\textwidth}
+		% HAW Hamburg
+		\fontfamily{cmr}\fontsize{10pt}{11pt}\selectfont
+		\begin{picture}(10, 2)(2, -10)
+			\linethickness{0.9mm}
+			\line(3,0){30}
+		\end{picture}
+		\vspace{-5mm}
+		\begin{flushleft}
+			HOCHSCHULE FÜR ANGEWANDTE WISSENSCHAFTEN HAMBURG\\\MakeUppercase{\FacultyDE}\\[2mm]
+			Hamburg University of Applied Sciences\\\FacultyEN\\[7mm]
+		\end{flushleft}
+		
+		% FH Westküste
+		\begin{picture}(10, 2)(2, -10)
+			\linethickness{0.9mm}
+			\line(3,0){30}
+		\end{picture}
+		\vspace{-5mm}
+		\begin{flushleft}
+			FACHHOCHSCHULE WESTKÜSTE\\FACHBEREICH TECHNIK\\[2mm]
+			Fachhochschule Westküste, University of Applied Sciences\\Faculty of Engineering\\
+		\end{flushleft}
+  \end{minipage}
+\end{textblock*}
+
+\hypersetup{pageanchor=true}
+\end{titlepage}
+\   % Required to prevent next page to be added to title page

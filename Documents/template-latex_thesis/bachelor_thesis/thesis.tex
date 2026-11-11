@@ -13,6 +13,11 @@
 \makeglossaries           % create all glossary entries (remember: run makeglossaries manually)
 \loadglsentries{thesisglossaries.tex}  % load acronym, symbol and glossarie entries
 
+% number and list subsubsections, so the learning-architecture
+% headings under Baseband Predistortion are numbered
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
 \sisetup{locale = DE}     % siunitx locale setup
 %\DeclareSIUnit \fps{fps}  % a custom unit (usage: \SI{24}{\fps})
 

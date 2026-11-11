@@ -1,16 +1,16 @@
 % Requirements Analysis
 %
-\chapter{Requirements Analysis}
+\chapter{Requirements Analysis}\label{ch:requirements_analysis}
 
 This chapter establishes the objectives and requirements of the present work. To provide a clear specification for the developed solution, the requirements are derived systematically through a step-by-step analysis based on the following.
 
 \section{Research Aim and Questions}
 
-The overall aim of this thesis is two-fold. It is to first understand the influence of power amplifier nonlinearity on the power amplifier chain of the SSR-X (INTRODUCE ABBREVIATION, ASK PROF HENSEL) pulse compression radar, and secondly, to counteract these effects using digital predistortion. These nonlinearities generally compound as input power increases towards saturation. Digital predistortion can counteract these effects, enabling the power amplifier to run closer to saturation without violating regulations and a significant performance degradation. This keeps the radar spectrally compliant and enables the radar to accommodate higher power and consequently higher SNR. This increased SNR headroom enhances detection probability of the radar. For instance, this headroom can be used to increase radar detection range or detect targets with a smaller cross section at the same range – such is a direct performance gain. SNR at the output of the system is increased without the need for purchasing additional expensive hardware. Mitigating nonlinearity effects may also aid in shrinking range sidelobes around strong targets, recovering the ability to detect weaker targets close in their vicinity. Moreover, if the sidelobe level reaches a certain threshold, false targets may emerge – misleading navigators. Mitigating such effects is paramount to improving radar performance and reliability. Specific research questions pertinent to the overall objective are outlined below:
+The overall aim of this thesis is two-fold. It is to first understand the influence of power amplifier nonlinearity on the power amplifier chain of the \gls{ac:ssr-x} pulse compression radar, and secondly, to counteract these effects using digital predistortion. These nonlinearities generally compound as input power increases towards saturation. Digital predistortion can counteract these effects, enabling the power amplifier to run closer to saturation without violating regulations and a significant performance degradation. This keeps the radar spectrally compliant and enables the radar to accommodate higher power and consequently higher \gls{ac:snr}. This increased \gls{ac:snr} headroom enhances detection probability of the radar. For instance, this headroom can be used to increase radar detection range or detect targets with a smaller cross section at the same range – such is a direct performance gain. \gls{ac:snr} at the output of the system is increased without the need for purchasing additional expensive hardware. Mitigating nonlinearity effects may also aid in shrinking range sidelobes around strong targets, recovering the ability to detect weaker targets close in their vicinity. Moreover, if the sidelobe level reaches a certain threshold, false targets may emerge – misleading navigators. Mitigating such effects is paramount to improving radar performance and reliability. Specific research questions pertinent to the overall objective are outlined below:
 
 \begin{itemize}
-    \item \textbf{RQ1:} What are the effects of power amplifier chain non-linearity on the SSR-X pulse compression radar performance?
-    \item \textbf{RQ2:} What existing models best emulate the power amplifier chain non-linearity effects on the SSR-X pulse compression radar?
+    \item \textbf{RQ1:} What are the effects of power amplifier chain non-linearity on the \gls{ac:ssr-x} pulse compression radar performance?
+    \item \textbf{RQ2:} What existing models best emulate the power amplifier chain non-linearity effects on the \gls{ac:ssr-x} pulse compression radar?
     \item \textbf{RQ3:} What digital predistortion techniques exist to counteract the non-linear effects of the power amplifier chain?
     \item \textbf{RQ4:} To what extent can digital predistortion counteract the non-linear effects of the power amplifier chain and improve performance?
 \end{itemize}
@@ -20,11 +20,11 @@ The overall aim of this thesis is two-fold. It is to first understand the influe
 \begin{figure}[tb]
   \centering
   \includegraphics[width=0.9\textwidth]{images/SSR-X Pulse Compression Radar System}
-  \caption{SSR-X Pulse Compression Radar System}
+  \caption{\gls{ac:ssr-x} Pulse Compression Radar System}
   \label{fig:pulse_compression_radar_system}
 \end{figure}
 
-This section describes the hardware environment of the SSR-X pulse compression radar system. The system is confined to the pulse compression radar chain of the SSR-X radar transceiver (ABBREVIATION, ASK PROF HENSEL), shown in Figure~\ref{fig:pulse_compression_radar_system}. A radar pulse signal is generated in the transmit chain and then input into the power amplifier for signal amplification before transmission. The echo of this pulse is then captured by the receive chain after some delay and attenuation. Pulse compression is performed at the end of the signal chain to increase SNR, increase range resolution, and determine range of a detected target. The thesis work focuses on investigating the nonlinear effects the power amplifier chain has on the system and finding a suitable digital predistortion solution to correct for these effects. 
+This section describes the hardware environment of the \gls{ac:ssr-x} pulse compression radar system. The system is confined to the pulse compression radar chain of the \gls{ac:ssr-x} radar transceiver, shown in Figure~\ref{fig:pulse_compression_radar_system}. A radar pulse signal is generated in the transmit chain and then input into the power amplifier for signal amplification before transmission. The echo of this pulse is then captured by the receive chain after some delay and attenuation. Pulse compression is performed at the end of the signal chain to increase \gls{ac:snr}, increase range resolution, and determine range of a detected target. The thesis work focuses on investigating the nonlinear effects the power amplifier chain has on the system and finding a suitable digital predistortion solution to correct for these effects. 
 
 \section{Stakeholders}
 
@@ -33,26 +33,26 @@ The stakeholders of this thesis are those who influence the direction of work an
 \begin{itemize}
     \item \textbf{NACOS Marine Radar Developers:} The engineers at NACOS Marine, who are responsible for the maintenance and development of the radar system, benefit from the results of this work, as it will provide insight on what the effects of power amplifier nonlinearity have on the radar system and its performance. It will help them understand the extent of these effects and how they may be detrimental to the overall radar system performance. The work may also provide potential solutions to these issues – guiding engineers in improving the quality and performance of the product they are developing.
     \item \textbf{NACOS Marine Product Management:} The product management department at NACOS Marine may benefit from this work, as it may improve the performance of the product they are selling. Higher performance – increased target range or detection of smaller targets – may open new market potential, increasing sales and revenue of the product. 
-    \item \textbf{International Electrotechnical Commission (IEC) Technical Committee:} According to the International Standard IEC 62388, X-band maritime radar shall transmit within the confines of the allocated band 9.2-9.5 GHz \cite[Sec.~6.2.1.1]{iec62388}. IEC are interested in the compliance of this requirement. Power amplifier nonlinear effects may result in unwanted emissions spreading outside of the confined frequency band – violating this requirement. This thesis work may present solutions to countermand these effects, ensuring spectral compliance with the standard.
+    \item \textbf{\gls{ac:iec} Technical Committee:} According to the International Standard IEC 62388, X-band maritime radar shall transmit within the confines of the allocated band \qtyrange{9.2}{9.5}{\giga\hertz} \cite[Sec.~6.2.1.1]{iec}. \gls{ac:iec} are interested in the compliance of this requirement. Power amplifier nonlinear effects may result in unwanted emissions spreading outside of the confined frequency band – violating this requirement. This thesis work may present solutions to countermand these effects, ensuring spectral compliance with the standard.
     \item \textbf{Radar System Users:} Users of the radar system, namely crew members responsible for navigating their vessel at sea, are interested in the results of this thesis, because it will potentially improve performance and reliability of the radar image used for navigating safely. The solutions presented in this thesis may aid in reducing masking around strong targets – enabling weaker targets within their vicinity to be distinctly detected. There is also the risk of the emergence of false targets – which this work may potentially mitigate. This helps crews to be sure that they can trust their navigation instruments. Performance gains, such as increased range and detection of smaller targets, may also help crews navigate more safely to avoid collision.
     \item \textbf{The Student:} The student, the author of this thesis, is interested in learning about the technicalities of radar development and deepening their understanding of concepts in signal processing. This thesis work provides the student the opportunity to gain practical experience in these aspects.
 \end{itemize}
 
-\section{Objectives Analysis}
+\section{Objectives Analysis}\label{sec:objectives_analysis}
 
 The overarching objective of this work is to determine what real effects power amplifier nonlinearity has on the pulse compression radar system and appropriate predistortion techniques to amend such effects for performance gain and spectral compliance. To better solidify how this can be achieved, it is divided into several detailed objectives below.
 
-\subsection{Generic Modelling of the SSR-X Pulse Compression Radar}
+\subsection{Generic Modelling of the \gls{ac:ssr-x} Pulse Compression Radar}
 
 The first objective is to develop a pulse compression radar simulation that can be used as a controlled platform for nonlinearity and digital predistortion experiments. This simulation serves as a generic model to understand the general behaviour of the power amplifier chain and apply different parameter values and view how this affects the outputs. Within such a simulation, various power amplifier nonlinearity models from literature can be dynamically applied and their effects investigated. On that note, a simulation will also demonstrate what the outputs of an ideal system would be, void of nonlinear effects. Furthermore, the simulation forms the basis for experimenting with different digital predistortion algorithms. 
 
-To best understand the power amplifier chain behaviour, it stands to reason for the simulation to simulate the main stages of the pulse compression radar and pulses generated by the real system in its standard operating mode. The pulses used by the pulse compression radar comprise a medium and long pulse – chosen depending on desired range. These pulses are generated in the real system’s FPGA as baseband signals. They are then windowed, upconverted to IF frequency, converted to analogue signals, then upconverted to RF frequency preceding amplification for transmission. This forms the transmit chain. Each pulse would return an attenuated and time delayed echo then passed through the receive chain of the system. In the receive chain, the echoes are amplified, down converted back to IF and baseband frequencies, and low pass filtered at the IF frequency. The final stage of the chain entails pulse compression to maximise SNR and detect after which delay time the echo returns. Each of the above stages act as primary components forming the pulse compression radar system.
+To best understand the power amplifier chain behaviour, it stands to reason for the simulation to simulate the main stages of the pulse compression radar and pulses generated by the real system in its standard operating mode. The pulses used by the pulse compression radar comprise a medium and long pulse – chosen depending on desired range. These pulses are generated in the real system’s \gls{ac:fpga} as baseband signals. They are then windowed, upconverted to \gls{ac:if}, converted to analogue signals, then upconverted to \gls{ac:rf} preceding amplification for transmission. This forms the transmit chain. Each pulse would return an attenuated and time delayed echo then passed through the receive chain of the system. In the receive chain, the echoes are amplified, down converted back to \gls{ac:if} and baseband frequencies, and low pass filtered at the \gls{ac:if}. The final stage of the chain entails pulse compression to maximise \gls{ac:snr} and detect after which delay time the echo returns. Each of the above stages act as primary components forming the pulse compression radar system.
 
-Furthermore, the simulation should produce plots that can be used to quantitively analyse power amplifier nonlinearity effects. Plots relevant to this topic are namely spectra of the various signals across the chain, AM-AM and AM-PM curves of the power amplifier, and the pulse compression output. Therefore, it stands to reason for the model to generate said plots. To evaluate overall performance, relevant plots should include quantitative values for KPIs pertinent to known nonlinearity effects – these primarily encompass signal magnitude, side lobe level, harmonics level, AM-AM linearisation, and AM-PM phase deviation. To elaborate, pulse compression and spectrum plots should measure main lobe peak amplitude, peak side lobe level (PSL), and integrated side lobe level as metrics to determine effects on signal magnitude, spectral compliance and range side lobes. Spectrum plots should additionally measure main lobe level of the second harmonic to determine extent of harmonics’ effects. AM-AM curves should measurably highlight the linear range extension as a KPI for linearisation effect, whereas total phase deviation should constitute the KPI for AM-PM curves. 
+Furthermore, the simulation should produce plots that can be used to quantitively analyse power amplifier nonlinearity effects. Plots relevant to this topic are namely spectra of the various signals across the chain, \gls{ac:am-am} and \gls{ac:am-pm} curves of the power amplifier, and the pulse compression output. Therefore, it stands to reason for the model to generate said plots. To evaluate overall performance, relevant plots should include quantitative values for \glspl{ac:kpi} pertinent to known nonlinearity effects – these primarily encompass signal magnitude, side lobe level, harmonics level, \gls{ac:am-am} linearisation, and \gls{ac:am-pm} phase deviation. To elaborate, pulse compression and spectrum plots should measure main lobe peak amplitude, \gls{ac:psl}, and \gls{ac:isl} as metrics to determine effects on signal magnitude, spectral compliance and range side lobes. Spectrum plots should additionally measure main lobe level of the second harmonic to determine extent of harmonics’ effects. \gls{ac:am-am} curves should measurably highlight the linear range extension as a \gls{ac:kpi} for linearisation effect, whereas total phase deviation should constitute the \gls{ac:kpi} for \gls{ac:am-pm} curves. 
 
-This objective is achieved if the simulation is developed and supports both pulses and the experimentation of power amplifier nonlinearity and digital predistortion models – involving the generation of relevant simulation plots with quantitative values for KPIs. 
+This objective is achieved if the simulation is developed and supports both pulses and the experimentation of power amplifier nonlinearity and digital predistortion models – involving the generation of relevant simulation plots with quantitative values for \glspl{ac:kpi}. 
 
-\subsection{Precise Modelling of the SSR-X Pulse Compression Radar}
+\subsection{Precise Modelling of the \gls{ac:ssr-x} Pulse Compression Radar}
 
 Following completion of the generic pulse compression radar model, the second objective is to adjust the parameters of the simulation to best model the actual pulse compression radar hardware. This will allow experiments on the nonlinearities and digital predistortion to be relevant to the real-world system. This will result in understanding the actual effects nonlinearity has on the pulse compression radar system hardware and how it reduces performance.
 
@@ -64,7 +64,7 @@ This objective is achieved when adequate measurements for behavioural understand
 
 \subsection{Implementation of Digital Predistortion}
 
-Once concrete nonlinear effects are determined from the precise model, the final objective involves implementing digital predistortion to counteract these effects and improve performance. This would involve the application of digital predistortion algorithms in the simulation, where the counter-effects on nonlinearity can be observed in the generated simulation results. To compare and evaluate results, it stands to reason to generate three separate sets of results – one ideal, one with nonlinear effects modelled, and one with digital predistortion applied. Values of the curves’ KPIs – signal magnitude, side lobe level, harmonics level, AM-AM nonlinear deviation, and AM-PM phase deviation – can then be directly compared. This aids in providing a metric to quantitively evaluate the extent of performance gain digital predistortion introduces.  This same comparison and evaluation could potentially also be performed on the real pulse compression radar hardware by implementing the simulated digital predistortion algorithm in its firmware.
+Once concrete nonlinear effects are determined from the precise model, the final objective involves implementing digital predistortion to counteract these effects and improve performance. This would involve the application of digital predistortion algorithms in the simulation, where the counter-effects on nonlinearity can be observed in the generated simulation results. To compare and evaluate results, it stands to reason to generate three separate sets of results – one ideal, one with nonlinear effects modelled, and one with digital predistortion applied. Values of the curves’ \glspl{ac:kpi} – signal magnitude, side lobe level, harmonics level, \gls{ac:am-am} nonlinear deviation, and \gls{ac:am-pm} phase deviation – can then be directly compared. This aids in providing a metric to quantitively evaluate the extent of performance gain digital predistortion introduces. Time permitting, this same comparison and evaluation could potentially also be performed on the real pulse compression radar hardware by implementing the simulated digital predistortion algorithm in its firmware.
 
 This objective is achieved when a digital predistortion algorithm is implemented in the simulation (and possibly in the firmware) and ideal, nonlinear, and predistorted results are compared with subsequent performance gain evaluated.  
 
@@ -78,13 +78,13 @@ Based on the system environment and analysis of stakeholders and objectives, the
 \begin{itemize}
     \item Baseband signal generation
     \item Baseband signal windowing
-    \item Up conversion to IF frequency
-    \item Up conversion to RF frequency
+    \item Up conversion to \gls{ac:if}
+    \item Up conversion to \gls{ac:rf}
     \item Transmit chain amplification (power amplifier)
     \item Channel effects (delay and attenuation)
     \item Receive chain amplification
-    \item Down conversion to IF frequency
-    \item IF frequency low pass filter 
+    \item Down conversion to \gls{ac:if}
+    \item \gls{ac:if} low pass filter 
     \item Down conversion to Baseband frequency
     \item Pulse compression
 \end{itemize}
@@ -97,30 +97,28 @@ Based on the system environment and analysis of stakeholders and objectives, the
 
 \textbf{FR5:} For each transmit pulse type (medium and long), the pulse compression radar simulation shall generate analysis plots that overlay the ideal, nonlinear power amplifier, and predistorted power amplifier cases for direct comparison.
 
-\textbf{FR6:} Generated pulse compression radar simulation spectrum plots shall include quantitative values for the following KPIs for evaluation:
+\textbf{FR6:} Generated pulse compression radar simulation spectrum plots shall include quantitative values for the following \glspl{ac:kpi} for evaluation:
 \begin{itemize}
     \item Main lobe peak amplitude
-    \item Peak side lobe level (PSL)
-    \item Integrated side lobe level (ISL)
+    \item \Gls{ac:psl}
+    \item \Gls{ac:isl}
     \item Second harmonic main lobe level
 \end{itemize}
 
-\textbf{FR7:} Generated pulse compression radar simulation pulse compression plots shall include quantitative values for the following KPIs for evaluation:
+\textbf{FR7:} Generated pulse compression radar simulation pulse compression plots shall include quantitative values for the following \glspl{ac:kpi} for evaluation:
 \begin{itemize}
     \item Main lobe peak amplitude
-    \item Peak side lobe level (PSL)
-    \item Integrated side lobe level (ISL)
+    \item \Gls{ac:psl}
+    \item \Gls{ac:isl}
 \end{itemize}
 
-\textbf{FR8:} Generated pulse compression radar simulation AM-AM plots shall include quantitative values for the KPI of linear range extension for evaluation.
+\textbf{FR8:} Generated pulse compression radar simulation \gls{ac:am-am} plots shall include quantitative values for the \gls{ac:kpi} of linear range extension for evaluation.
 
-\textbf{FR9:} Generated pulse compression radar simulation AM-PM plots shall include quantitative values for the KPI of total phase deviation for evaluation.
-
-\textbf{FR10:} Measurements on the pulse compression radar hardware shall be performed to understand real system behaviour and precisely finetune the simulation.
+\textbf{FR9:} Generated pulse compression radar simulation \gls{ac:am-pm} plots shall include quantitative values for the \gls{ac:kpi} of total phase deviation for evaluation.
 
 \subsection{Non-Functional Requirements}
 
-\textbf{NFR1:} The pulse compression radar simulation shall be developed in Python to ease the learning curve and development speed for the student.
+\textbf{NFR1:} The pulse compression radar simulation shall be developed in Python to ease the learning curve and development speed for the student due to its simple built-in libraries and the student's familiarity with it.
 
 \textbf{NFR2:} The pulse compression radar simulation shall be developed modularly, so that it can be easily maintained and extended.
 

@@ -1,0 +1,222 @@
+\chapter{Introduction}
+\label{chapter:Introduction}
+
+Well, you are about to write your thesis? There is no need to tell you that there are several months of hard work ahead. However, we try to support you by providing this \LaTeX\ template, which is hopefully easy to use and needs only little explanation. This chapter is meant to help you to set up a project for your written thesis. Moreover, there are examples for frequent content such as, for instance, figures, listings, and references to literature as well as online resources.
+
+%*********************************************************************************
+%---------------------------------------------------------------------------------
+\section{Getting Started with this Template}
+%---------------------------------------------------------------------------------
+%*********************************************************************************
+
+Please start your journey by editing the main file \emph{Thesis.tex} in the root directory. The file contains a section where you specify basic information (e.~g., your name and degree course, the examiners, title of the thesis), layout settings, and the files containing your chapters and appendix. Most settings are described by comments in \emph{Thesis.tex} and should be self-explanatory. Still, let us give you some further information.
+
+%---------------------------------------------------------------------------------
+
+\paragraph{Language} Please specify the language you use for your written thesis as either German (\emph{DE}) or English (\emph{EN}). This setting must match the language of the officially registered title, but need not match the prevailing language used in lectures of your degree course. For instance, a student of the degree course \emph{B.Sc. Elektrotechnik und Informationstechnik} may write a thesis in English.
+%
+\begin{lstlisting}[language=bash]
+\Language{EN}
+\end{lstlisting}
+
+%---------------------------------------------------------------------------------
+
+\paragraph{Degree course} Specify your degree course using one of the abbreviations listed in the respective comment in \emph{Thesis.tex} (e.~g., \emph{IE} for \emph{B.Sc. Information Engineering}).
+%
+\begin{lstlisting}[language=bash]
+\DegreeCourse{IE}
+\end{lstlisting}
+
+%---------------------------------------------------------------------------------
+
+\paragraph{None-disclosure} Set the value \emph{Confidential} to 1, if and only if your thesis must not be published. This is typically the case for theses written at a company.
+%
+\begin{lstlisting}[language=bash]
+\Confidential{0}
+\end{lstlisting}
+
+%---------------------------------------------------------------------------------
+
+\paragraph{Single-sided or double-sided} Set \emph{SingleSidedPrint} to 1 or 0 to generate a PDF for single-sided or double-sided printing, respectively. Many examiners prefer single-sided documents, because they can use the empty pages at the left of their printed copy for comments and corrections. However, obviously double-sided printing reduces the number of physical sheets of paper. It may be a good idea to align with your examiners before switching to double-sided printing.
+%
+\begin{lstlisting}[language=bash]
+\SingleSidedPrint{1}
+\end{lstlisting}
+
+%---------------------------------------------------------------------------------
+
+\paragraph{Title's font size} Typically, it looks strange when the title on the cover page uses more than two or three lines. You can adapt the font size by setting \emph{TitleFontSize} to \emph{large}, \emph{normal}, or \emph{small}.
+%
+\begin{lstlisting}[language=bash]
+\TitleFontSize{normal}
+\end{lstlisting}
+
+%---------------------------------------------------------------------------------
+
+\paragraph{Examiners} Please specify the gender of your supervisor and second examiner as either \emph{male} or \emph{female}. This setting is relevant for theses written in German, only, to print either ``Prüfer'' or ``Prüferin'' and ``Zweitgutachter'' or ``Zweitgutachterin'' on the page containing general information about the thesis.
+%
+\begin{lstlisting}[language=bash]
+\Supervisor{Prof. Dr.-Ing. Marc Hensel}{male}
+\SecondExaminer{Prof. Dr. rer. nat. Ulrike Herster}{female}
+\end{lstlisting}
+
+%---------------------------------------------------------------------------------
+
+\paragraph{Bilingual abstract} Please note that every thesis must contain the abstract page in German \emph{and} English. Therefore, you must specify the title, keywords, and the text of the abstract in both languages.
+%
+\begin{lstlisting}[language=bash]
+\Titles{German}{English}
+\Keywords{German}{English}
+\Abstracts{German}{English}
+\end{lstlisting}
+
+%---------------------------------------------------------------------------------
+
+\paragraph{List of figures etc.} You can enable or disable lists of figures, tables, and listings by setting the respective value to 1 or 0. In case of doubt, align with your supervisor which lists to include in your thesis.
+%
+\begin{lstlisting}[language=bash]
+\ListOfFigures{1}
+\ListOfTables{1}
+\ListOfListings{1}
+\end{lstlisting}
+
+%---------------------------------------------------------------------------------
+
+\paragraph{Chapters and appendix} Specify the \LaTeX\ files containing your chapters and appendix. We recommend to store the \emph{*.tex} files in the subfolders \emph{.$\backslash$Chapters} and \emph{.$\backslash$Appendix}, respectively, and image files in corresponding subfolders of \emph{.$\backslash$Figures}. Leave the command \emph{Appendix} empty, in case your thesis does not contain an appendix.
+%
+\begin{lstlisting}[language=bash]
+\Chapters{
+	\input{Chapters/Introduction}
+	\input{Chapters/Fundamentals}
+	\input{Chapters/Requirements}
+	...
+}
+\Appendix{
+	\input{Appendix/Appendix}
+	...
+}
+\end{lstlisting}
+
+%*********************************************************************************
+%---------------------------------------------------------------------------------
+\section{Specific Files}
+%---------------------------------------------------------------------------------
+%*********************************************************************************
+
+Apart from \emph{Thesis.tex} there are only few provided files that you should or must modify. Let's have a look.
+
+%---------------------------------------------------------------------------------
+
+\paragraph{Additional packages} The file \emph{.$\backslash$Preamble$\backslash$Packages.tex} contains frequently used packages (e.~g. math, listings, TikZ drawings). This is a great place to add further required packages, isn't it?
+
+%---------------------------------------------------------------------------------
+
+\paragraph{Bibliography} Add literature to \emph{.$\backslash$SpecialPages$\backslash$Bibliography.bib}. The file contains sample BibTeX entries for theses~\cite{Lassahn24}, books~\cite{Burger15,Chollet26}, and articles~\cite{HenselVogel25}. For further entry types and additional information refer to, for instance, the related Wikipedia article\footnote{\url{https://de.wikipedia.org/wiki/BibTeX} (Accessed: 15.09.2026)}.
+
+Please note that a bibliography should contain only sources that are not subject to potential changes (e.~g., books, manuals, theses, ISO standards). Other sources -- in particular online resources such as the Wikipedia article referred to in the previous paragraph -- should be referenced using a footnote with url and the date of access.
+%
+\begin{lstlisting}[language=bash]
+HAW Hamburg\footnote{\url{www.haw-hamburg.de} (Accessed: 15.09.2026)}
+\end{lstlisting}
+
+%---------------------------------------------------------------------------------
+
+\paragraph{Use of AI tools} Be aware that you \emph{must} declare all use of AI tools in the declaration on page~\pageref{Declaration:AI}. Modify the table in \emph{.$\backslash$SpecialPages$\backslash$DeclarationOnUseOfAI.tex} accordingly.
+
+%*********************************************************************************
+%---------------------------------------------------------------------------------
+\section{Online and Local Editors}
+%---------------------------------------------------------------------------------
+%*********************************************************************************
+
+The prior sections served the purpose to clarify how to use the template. In the following, let's briefly discuss online and local editors. We recommend using a local \LaTeX\ environment, which is easy to set up, easy to use, works without internet connection, and does not introduce risks with respect to the protection of confidential data.
+
+%---------------------------------------------------------------------------------
+
+\paragraph{Overleaf} Many students seem to use the online editor Overleaf\footnote{\url{https://www.overleaf.com} (Accessed: 15.09.2026)} to work on their written thesis. To create your project, choose \emph{Existing project (.zip)} and select or drag and drop the provided zip file of this template. Note that in our tests the compilation process frequently ran into timeout errors. The cause is not fully understood yet, however, following workaround typically solved the issue during our tests:
+%
+\begin{enumerate}
+	\item Change the language to German (\emph{DE}) in \emph{Thesis.tex}.
+	\item Do any modification in \emph{.$\backslash$Preamble$\backslash$Packages.tex} (e.~g., change a comment and change it back to its original text).
+	\item Press the red button \emph{Clear cached files} in the lower right of the window.
+	\item Select \emph{Recompile from scratch} from the drop-down menu next to the green button \emph{Recompile}.
+	\item If necessary, press \emph{Recompile} several times until the PDF is generated. Once compilation is successful, you may change the language back to English.
+\end{enumerate}
+%
+Alternatively, use a local installation where in our experience such issues do not exist.
+
+%---------------------------------------------------------------------------------
+
+\paragraph{Local environments} Instead of using an online editor, you should consider working with a local \LaTeX\ environment. This approach brings only little initial effort and has some advantages (e.~g., protection of confidential data). While there are different software packages available, in my experience it is comfortable to first install MiKTeX\footnote{\url{https://miktex.org/} (Accessed: 15.09.2026)} as \TeX\ distribution and use TeXstudio\footnote{\url{https://texstudio.org/} (Accessed: 22.09.2026)} as editor. There is no need to create a project. Instead, open the main file \emph{Thesis.tex} to start editing (Fig.~\ref{Fig:Introduction:TeXstudio}).%
+%
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=\textwidth]{Figures/Introduction/TeXstudio}
+	\caption{\LaTeX\ editor TeXstudio}
+	\label{Fig:Introduction:TeXstudio}
+\end{figure}
+%
+A good alternative is the editor TeXnicCenter\footnote{\url{https://www.texniccenter.org/} (Accessed: 15.09.2026)} (Fig.~\ref{Fig:Introduction:TeXnicCenter}), which requires initial configuration.
+%
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=\textwidth]{Figures/Introduction/TeXnicCenter}
+	\caption{\LaTeX\ editor TeXnicCenter}
+	\label{Fig:Introduction:TeXnicCenter}
+\end{figure}
+
+%*********************************************************************************
+%---------------------------------------------------------------------------------
+\section{Figures, Tables, and Listings}
+%---------------------------------------------------------------------------------
+%*********************************************************************************
+
+Finally, let's take advantage of the fact that the \LaTeX\ sources of this document are available to you. This gives us the opportunity to provide examples how to include, for instance, figures, tables, and listings in your thesis.
+
+%---------------------------------------------------------------------------------
+
+\paragraph{Figures and tables} Naturally, the following is a recommendation, not a strict rule. However, it is good practice to position figures and tables at the top of a page with the text passages below (e.~g., Figures~\ref{Fig:Introduction:TeXstudio} and \ref{Fig:Introduction:TeXnicCenter}, Table~\ref{Tab:Introduction:SelectedCommands}).
+%
+\begin{table}[t]
+	\centering
+	\small
+	\caption{Selected template commands}
+	\begin{tabular}{ll} \toprule
+		\textbf{Command} & \textbf{Valid values} \\ \toprule
+		Language & DE, EN \\ \midrule
+		SingleSidedPrint & 0, 1\\ \midrule
+		TitleFontSize & large, normal, small\\ \bottomrule
+	\end{tabular}
+	\label{Tab:Introduction:SelectedCommands}
+\end{table}
+%
+To achive this layout, pass the option \emph{t} to the environment of the figure or table, for instance:
+%
+\begin{lstlisting}
+\begin{figure}[t]
+	...
+\end{figure}
+\end{lstlisting}
+
+%---------------------------------------------------------------------------------
+
+\paragraph{Listings} The \emph{listings} package provides support for source codes. In particular, use the environment \emph{lstlisting} to generate code within the running text
+%
+\begin{lstlisting}
+int sum = 0;
+\end{lstlisting}
+%
+as well as numbered listings like Listing~\ref{Listing:Introduction:OpenImage}.
+%
+\begin{lstlisting}[float=t,frame=t,captionpos=b,caption={Open and display an image},label={Listing:Introduction:OpenImage}]
+int main()
+{
+	cv::Mat image = cv::imread("D:/Docks.jpg", cv::IMREAD_ANYCOLOR);
+	cv::imshow("Image", image);
+	cv::waitKey(0);
+	return 0;
+}
+\end{lstlisting}
+%
+To customize the layout, such as color schemes, line numbers, language-dependent syntax highlighting, and so on, please refer to the appropriate section of the file \emph{.$\backslash$Preamble$\backslash$Packages.tex} and the documentation\footnote{\url{https://ctan.org/pkg/listings} (Accessed: 15.09.2026)} of the package.
+

@@ -15,6 +15,30 @@ def plot_time_signal(samples, t, name):
     plt.grid(True)
     plt.show()
 
+def plot_mag_time(outputs, t, name):
+    """
+    outputs: dict {label: complex samples}, all drawn on the same axes
+    t:       time vector shared by all cases
+    """
+    plt.figure()
+    for label, samples in outputs.items():
+        wave_amp = np.abs(samples)
+        power_dbm = 10 * np.log10(wave_amp**2 + 1e-30) + 30 # convert to power
+
+        line, = plt.plot(t*1e6, power_dbm, label=label)
+
+        # Peak marker
+        k = np.argmax(wave_amp)
+        plt.plot(t[k]*1e6, power_dbm[k], 'o', color=line.get_color(),
+                 label=f"{label} peak: |y| = {wave_amp[k]:.2f} ({power_dbm[k]:.2f} dBm)")
+
+    plt.title(f"{name} Signal Magnitude")
+    plt.xlabel("Time (us)")
+    plt.ylabel("Magnitude (dBm)")
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
 def plot_power_spectrum(samples, f, name):
     plt.figure()
     plt.plot(f/1e6, samples)
@@ -56,22 +80,6 @@ def plot_power_spectrum_grid(subplot_groups, title, ncols=2):
     fig.tight_layout()
     plt.show()
 
-def plot_am_am_curve(input, output, gain, model_name):
-    am_in = np.abs(input)
-    am_out = np.abs(output)
-
-    plt.figure()
-    plt.plot(am_in, am_out, label=model_name)
-    plt.plot(am_in, gain * am_in, "--", label="Ideal linear gain")
-    # plt.axhline(A_sat, linestyle=":", label=r"$A_{sat}$")
-
-    plt.xlabel("Input wave amplitude |x|")
-    plt.ylabel("Output wave amplitude |y|")
-    plt.title(f"{model_name} Characteristic")
-    plt.grid(True)
-    plt.legend()
-    plt.show()
-
 def _compression_point_dbm(am_in, am_out, gain, threshold_db):
     """
     Returns (in_dbm, out_dbm) where the output falls threshold_db below the
@@ -95,70 +103,121 @@ def _compression_point_dbm(am_in, am_out, gain, threshold_db):
     p_out = out_dbm_s[idx-1] + frac * (out_dbm_s[idx] - out_dbm_s[idx-1])
     return p_in, p_out
 
-def plot_am_am_curve_dbm(input, output, gain, model_name):
-    am_in = np.abs(input)
-    am_out = np.abs(output)
+def plot_am_am_curve(input, outputs, gain, model_name):
+    """
+    Linear (|x| vs |y|) and logarithmic (dBm) AM/AM curves side by side.
 
-    in_dbm = 10*np.log10(am_in**2 + 1e-12) + 30
-    out_dbm = 10*np.log10(am_out**2 + 1e-12) + 30
-    ideal_dbm = 10*np.log10((gain * am_in)**2 + 1e-12) + 30
-
-    plt.figure()
-    plt.plot(in_dbm, out_dbm, label=model_name)
-    plt.plot(in_dbm, ideal_dbm, "--", label="Ideal linear gain")
-
-    # P1dB: 1 dB compression point
-    p1db = _compression_point_dbm(am_in, am_out, gain, 1.0)
-    if p1db is not None:
-        plt.plot(*p1db, 'o', color='red', label=f"P1dB ({p1db[0]:.1f}, {p1db[1]:.1f}) dBm")
-
-    # P3dB: 3 dB compression point (standard datasheet convention, more
-    # robust than the raw max sample, which just tracks the highest
-    # amplitude this particular pulse happened to reach)
-    p3db = _compression_point_dbm(am_in, am_out, gain, 3.0)
-    if p3db is not None:
-        plt.plot(*p3db, 'x', color='green', label=f"P3dB ({p3db[0]:.1f}, {p3db[1]:.1f}) dBm")
-
-    plt.xlabel("Input power (dBm)")
-    plt.ylabel("Output power (dBm)")
-    plt.title(f"{model_name} Characteristic (dBm)")
-    plt.grid(True)
-    plt.legend()
-    plt.show()
-
-def plot_am_pm_curve(input, output, model_name):
-    # Magnitudes
-    am_in = np.abs(input)
-
-    # Phase difference
-    phase_in = np.angle(input)
-    phase_out = np.angle(output)
-    am_pm = np.degrees(np.angle(np.exp(1j * (phase_out - phase_in))))
-
-    plt.figure()
-    plt.plot(am_in, am_pm, '.', markersize=2)
-
-    plt.xlabel("Input wave amplitude |x|")
-    plt.ylabel("Phase distortion (deg)")
-    plt.title(f"{model_name} Curve")
-    plt.grid(True)
-
-    plt.show()
-
-def plot_am_pm_curve_dbm(input, output, model_name):
+    input:   PA-chain input used as the x axis for every case
+    outputs: dict {label: output samples}, all drawn on the same axes
+    gain:    linear gain the compression points are measured against, either
+             one value for all cases or a dict {label: gain}
+    """
     am_in = np.abs(input)
     in_dbm = 10*np.log10(am_in**2 + 1e-12) + 30
 
-    phase_in = np.angle(input)
-    phase_out = np.angle(output)
-    am_pm = np.degrees(np.angle(np.exp(1j * (phase_out - phase_in))))
+    fig, (ax_lin, ax_log) = plt.subplots(1, 2, figsize=(12, 6))
+    fig.suptitle(f"{model_name} Characteristic")
 
-    plt.figure()
-    plt.plot(in_dbm, am_pm, '.', markersize=2)
+    for label, output in outputs.items():
+        am_out = np.abs(output)
+        out_dbm = 10*np.log10(am_out**2 + 1e-12) + 30
 
-    plt.xlabel("Input power (dBm)")
-    plt.ylabel("Phase distortion (deg)")
-    plt.title(f"{model_name} Curve (dBm)")
-    plt.grid(True)
+        ax_lin.plot(am_in, am_out, label=label)
+        line, = ax_log.plot(in_dbm, out_dbm, label=label)
+        case_gain = gain[label] if isinstance(gain, dict) else gain
 
+        # P1dB: 1 dB compression point
+        p1db = _compression_point_dbm(am_in, am_out, case_gain, 1.0)
+        if p1db is not None:
+            ax_log.plot(*p1db, 'o', color=line.get_color(), label=f"{label} P1dB ({p1db[0]:.1f}, {p1db[1]:.1f}) dBm")
+
+        # P3dB: 3 dB compression point (standard datasheet convention, more
+        # robust than the raw max sample, which just tracks the highest
+        # amplitude this particular pulse happened to reach)
+        p3db = _compression_point_dbm(am_in, am_out, case_gain, 3.0)
+        if p3db is not None:
+            ax_log.plot(*p3db, 'x', color=line.get_color(), label=f"{label} P3dB ({p3db[0]:.1f}, {p3db[1]:.1f}) dBm")
+    # ax_lin.axhline(A_sat, linestyle=":", label=r"$A_{sat}$")
+
+    ax_lin.set_xlabel("Input wave amplitude |x|")
+    ax_lin.set_ylabel("Output wave amplitude |y|")
+    ax_lin.set_title("Linear")
+    ax_lin.grid(True)
+    ax_lin.legend()
+
+    ax_log.set_xlabel("Input power (dBm)")
+    ax_log.set_ylabel("Output power (dBm)")
+    ax_log.set_title("Logarithmic")
+    ax_log.grid(True)
+    ax_log.legend()
+
+    fig.tight_layout()
+    plt.show()
+
+def plot_am_pm_curve(input, outputs, model_name):
+    """
+    AM/PM curves against linear input amplitude and against input power (dBm)
+    side by side.
+
+    input:   PA-chain input used as the x axis and phase reference for every case
+    outputs: dict {label: output samples}, all drawn on the same axes
+    """
+    am_in = np.abs(input)
+    in_dbm = 10*np.log10(am_in**2 + 1e-12) + 30
+
+    fig, (ax_lin, ax_log) = plt.subplots(1, 2, figsize=(12, 6))
+    fig.suptitle(f"{model_name} Curve")
+
+    for label, output in outputs.items():
+        # Phase difference
+        phase_in = np.angle(input)
+        phase_out = np.angle(output)
+        am_pm = np.degrees(np.angle(np.exp(1j * (phase_out - phase_in))))
+
+        ax_lin.plot(am_in, am_pm, '.', markersize=2, label=label)
+        ax_log.plot(in_dbm, am_pm, '.', markersize=2, label=label)
+
+    ax_lin.set_xlabel("Input wave amplitude |x|")
+    ax_lin.set_ylabel("Phase distortion (deg)")
+    ax_lin.set_title("Linear")
+    ax_lin.grid(True)
+    ax_lin.legend(markerscale=5)
+
+    ax_log.set_xlabel("Input power (dBm)")
+    ax_log.set_ylabel("Phase distortion (deg)")
+    ax_log.set_title("Logarithmic")
+    ax_log.grid(True)
+    ax_log.legend(markerscale=5)
+
+    fig.tight_layout()
+    plt.show()
+
+def plot_pulse_compression(outputs, fs, name):
+    """
+    outputs: dict {label: pulse compression output}, all drawn on the same axes
+    """
+    fig, (ax_lin, ax_log) = plt.subplots(1, 2, figsize=(12, 6))
+    fig.suptitle(f"{name} Pulse Compression Output")
+
+    for label, y in outputs.items():
+        t_mf = np.arange(len(y)) / fs # time axis
+        power = np.abs(y)**2
+        power_dbm = 10 * np.log10(power + 1e-30) + 30
+
+        ax_lin.plot(t_mf*1e6, power, label=label)
+        ax_log.plot(t_mf*1e6, power_dbm, label=label)
+
+    ax_lin.set_ylabel("Power (W)")
+    ax_lin.set_title("Linear")
+    ax_lin.set_xlabel("Time (us)")
+    ax_lin.grid(True)
+    ax_lin.legend()
+
+    ax_log.set_ylabel("Power (dBm)")
+    ax_log.set_title("Logarithmic")
+    ax_log.set_xlabel("Time (us)")
+    ax_log.grid(True)
+    ax_log.legend()
+
+    fig.tight_layout()
     plt.show()

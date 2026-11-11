@@ -1,0 +1,30 @@
+RESULTS LOG
+Date: 2026-11-11 16:27:54
+Pulse: L1 (25.0 us, 5.0 MHz, amplitude 10)
+PA model: Rapp
+ILC: K = 500, target gain = 0.570, fully linear (peak = 95 % of PA max output)
+Spectrum: 100 MHz span, chirp band 9.3361 - 9.3411 GHz
+LO leakage: -22 dBc
+
+PA output spectrum (mainlobe = chirp band)
+KPI                        Ideal   Nonlinear  Predistorted  NL - Ideal  PD - Ideal   PD - NL
+--------------------------------------------------------------------------------------------
+Mainlobe peak (dBm)        23.01       18.53         18.13       -4.48       -4.88     -0.40
+PSL (dB)                  -30.68      -25.42        -30.68        5.27       -0.00     -5.27
+ISL (dB)                  -39.00      -35.63        -39.00        3.37       -0.00     -3.37
+
+Pulse compression output (mainlobe = peak to first nulls)
+KPI                        Ideal   Nonlinear  Predistorted  NL - Ideal  PD - Ideal   PD - NL
+--------------------------------------------------------------------------------------------
+Mainlobe peak (dBm)       129.39      126.41        124.51       -2.98       -4.88     -1.90
+PSL (dB)                  -65.13      -26.90        -65.13       38.23        0.00    -38.23
+ISL (dB)                  -50.46      -26.98        -50.46       23.47        0.00    -23.47
+
+AM-AM 1 dB compression point (input / output)
+  Nonlinear     45.56 dBm / 44.56 dBm
+  Predistorted  not reached
+
+AM-PM total phase deviation (relative to the original pulse)
+KPI                        Ideal   Nonlinear  Predistorted  NL - Ideal  PD - Ideal   PD - NL
+--------------------------------------------------------------------------------------------
+Total phase dev. (deg)      0.00       16.78          5.27       16.78        5.27    -11.51

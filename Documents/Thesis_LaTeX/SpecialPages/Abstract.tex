@@ -1,0 +1,31 @@
+\newpage
+\thispagestyle{plain}
+\clearpage
+%\hfuzz=12pt       % suppress warnings due to extenstion onto page margins
+
+% Define German abstract
+\def\GermanAbstract{
+	\textbf{\TheStudent}\\[1em]
+	\textbf{Thema der Arbeit}\\\TitleDE \\[1em]
+	\textbf{Stichwörter}\\\KeywordsDE \\[1em]
+	\textbf{Kurzzusammenfassung}\\
+	\AbstractDE
+}
+
+% Define English abstract
+\def\EnglishAbstract{
+	\textbf{\TheStudent}\\[1em]
+	\textbf{Title of Thesis}\\\TitleEN \\[1em]
+	\textbf{Keywords}\\\KeywordsEN \\[1em]
+	\textbf{Abstract}\\
+	\AbstractEN
+}
+
+% Print in correct order of languages
+\DE{
+	\GermanAbstract \\[1cm]
+	\EnglishAbstract
+}{
+	\EnglishAbstract \\[1cm]
+	\GermanAbstract
+}

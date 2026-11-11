@@ -1,13 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.signal import fftconvolve
 
-def zero_pad(signal, target_length):
-    pad_total = target_length - len(signal)
-    pad_left = pad_total // 2
-    pad_right = pad_total - pad_left
+def apply_window(samples, kaiser_beta):
+    window = np.kaiser(len(samples), kaiser_beta)
+    I = np.real(samples)*window
+    Q = np.imag(samples)*window
 
-    signal_padded = np.pad(signal, (pad_left, pad_right), mode='constant')
-    return signal_padded
+    return I + 1j*Q # windowed signal
 
 def linear_gain(samples, gain_dB):
     gain_amp = 10**(gain_dB / 20)
@@ -23,17 +23,11 @@ def apply_channel(samples, gain_dB, delay_samples):
     samples = linear_gain(samples, gain_dB)
     samples = apply_time_delay(samples, delay_samples)
 
-    # FORGET BELOW, JUST KEEP TX SAMPLE RATE
-    # self.fs = fs # update to Rx sample rate
-    # N = len(self.samples)
-    # self.t = np.arange(N)/self.fs
-    # self.t_sim = N/self.fs
-
     return samples
 
 def pulse_compression(tx_samples, rx_samples, fs, name, plot=True):
     h = np.conj(tx_samples[::-1]) # time-reversed complex conjugate of Tx signal
-    y = np.convolve(rx_samples, h, mode="full")
+    y = fftconvolve(rx_samples, h, mode="full")
     power = np.abs(y)**2
     power_dbm = 10 * np.log10(power) + 30
 
@@ -57,3 +51,4 @@ def pulse_compression(tx_samples, rx_samples, fs, name, plot=True):
         fig.tight_layout()
         plt.show()
 
+    return y

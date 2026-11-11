@@ -1,0 +1,6 @@
+% Add these to thesisglossaries.tex, alongside the existing acronyms:
+
+\newacronym{ac:sspa}{SSPA}{solid-state power amplifier}
+\newacronym{ac:twta}{TWTA}{travelling wave tube amplifier}
+\newacronym{ac:ldmos}{LDMOS}{laterally diffused metal oxide semiconductor}
+\newacronym{ac:nmse}{NMSE}{normalised mean squared error}

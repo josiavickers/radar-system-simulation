@@ -1,0 +1,52 @@
+% Implementation
+%
+\chapter{Implementation}\label{ch:implementation}
+
+This chapter presents the implementation of the investigative work of this thesis. This involves implementation of the \gls{ac:ssr-x} pulse compression radar simulation and its accompanying evaluation framework to investigate power amplifier nonlinearity effects and predistortion benefits. The previous chapter outlined the architecture of the simulation and evaluation system to be developed, including the general workflow approach for implementation. The implementation follows this workflow and develops the system and its components based on the design details of Chapter~\ref{ch:concept_and_design}. 
+
+The following subsections first discuss the implementation of the generic \gls{ac:ssr-x} pulse compression radar simulation, its components, and its evaluative framework. Then, the refinement of the simulation through hardware measurements is explored. Finally, implementation of the derived simulated predistorter on real hardware is outlined. Unforeseen challenges and modifications that became apparent during implementation are also mentioned. The final chapters~\ref{ch:evaluation} and~\ref{ch:conclusion_and_outlook} report on the results and drawn conclusions from the experiments conducted during implementation.
+
+The aim of this chapter is to describe implementation of the work in detail to provide a solid understanding of the developed system and experimentive work -- without the need to inspect the source code, experimental setup, or measurement execution directly.  
+
+\section{Development of Generic \gls{ac:ssr-x} Pulse Compression Radar Simulation}
+
+The generic \gls{ac:ssr-x} pulse compression radar simulation is implemented as Python software, simulating the primary components of the \gls{ac:ssr-x} pulse compression radar and generating apposite plots and results logs for analysis. All of these aspects of the simulation are implemented as independent modular functions that interact with one another to emulate the complete pulse compression radar chain -- described more thoroughly in subsection~\ref{sec:system_architecture}. This section details the implementation of each of these aspects of the simulation. 
+
+The generic simulation lays the foundational scaffolding for nonlinearity analysis and determining predistorter performance enhancement. As such, it is implemented as a general draft representation of the real \gls{ac:ssr-x} pulse compression radar hardware -- only considering primary components and general behaviour of pulse compression radar. The correct numerical values provided to and produced by each component to best model real system behaviour is later determined by real system measurements to finetune the generic simulation.
+
+As mentioned, the simulation is developed in Python in accordance with NFR1 in section~\ref{sec:reqs_overview}. Python was selected, because it is replete with multifarious ready-made library modules appropriate for simulation, calculating, and plotting. Moreover, the author of the thesis is more familiar with the language, ameliorating the learning curve. The following subsections, describing each simulation aspect's implementation, mentions the specific library modules utilised.   
+
+\subsection{\gls{ac:ssr-x} Pulse Compression Radar Chain}
+
+The \gls{ac:ssr-x} pulse compression radar chain is the structural backbone of the entire simulation. It comprises a chain of sequentially cascading subcomponents in a transmit, channel, and receive path that form the basis of a pulse compression system.     
+
+\subsubsection{Pulse Signal Class}
+
+\subsubsection{Kaiser Window Module}
+
+\subsubsection{\gls{ac:if} and \gls{ac:rf} Mixing Module}
+
+\subsubsection{Power Amplifier Module}
+
+SAY NO HARMONIC FILTER
+
+\subsubsection{Channel Module}
+
+\subsubsection{\gls{ac:lna} Module}
+
+\subsubsection{\gls{ac:if} Low Pass Filter Module}
+
+\subsubsection{Pulse Compression Module}
+
+The power amplifier module serves as the heart of the simulation. It is here that nonlinearity is generated in the simulation. 
+
+\subsection{Results Logs and Plotting}
+
+\section{Development of Precise \gls{ac:ssr-x} Pulse Compression Radar Simulation}
+
+\subsection{Measurement of \gls{ac:ssr-x} Pulse Compression Radar Hardware}
+
+\subsection{Refinement of \gls{ac:ssr-x} Pulse Compression Radar Simulation}
+
+\section{Development of Predistortion on \gls{ac:ssr-x} Pulse Compression Radar Hardware}
+

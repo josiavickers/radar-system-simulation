@@ -1,0 +1,47 @@
+#
+# latexmk configuration for the HAW thesis template
+#
+# Keep this file next to thesis.tex. latexmk reads it automatically and then
+# works out the whole build for you: pdflatex, makeglossaries, bibtex and
+# however many extra pdflatex passes are needed to settle the table of
+# contents, cross-references, citation numbers and the glossary.
+#
+# Usage:   latexmk thesis
+# Clean:   latexmk -c thesis      (remove aux files, keep the PDF)
+#          latexmk -C thesis      (remove aux files and the PDF)
+#
+
+# Build a PDF with pdflatex (not DVI/PS).
+$pdf_mode = 1;
+
+# Run bibtex when the document has a \bibliography, and treat the .bbl
+# as a regenerable file.
+$bibtex_use = 2;
+
+# --- glossaries support -----------------------------------------------------
+# latexmk knows nothing about the glossaries package out of the box, so teach
+# it the three conversions this template needs:
+#   .acn -> .acr   the list of acronyms
+#   .glo -> .gls   the glossary
+#   .slo -> .sls   the list of symbols
+# The trailing 0 means "don't fail if the source file isn't there", which
+# matters because only the lists whose entries you actually use get filled.
+add_cus_dep('acn', 'acr', 0, 'makeglossaries');
+add_cus_dep('glo', 'gls', 0, 'makeglossaries');
+add_cus_dep('slo', 'sls', 0, 'makeglossaries');
+
+sub makeglossaries {
+    my ($base_name, $path) = fileparse( $_[0] );
+    pushd $path;
+    # If MiKTeX reports that Perl is missing, change "makeglossaries" on the
+    # next line to "makeglossaries-lite" (the Lua version, no Perl needed).
+    my $return = system "makeglossaries-lite", $base_name;
+    popd;
+    return $return;
+}
+
+# Let "latexmk -c" clean up the glossary leftovers too.
+push @generated_exts, 'glo', 'gls', 'glg';
+push @generated_exts, 'acn', 'acr', 'alg';
+push @generated_exts, 'slo', 'sls', 'slg';
+$clean_ext .= ' %R.ist %R.xdy';

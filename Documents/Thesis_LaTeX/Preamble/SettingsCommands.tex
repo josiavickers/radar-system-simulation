@@ -1,0 +1,107 @@
+%---------------------------------------------------------------------------------
+% Document language: German (DE) or English (EN)
+%---------------------------------------------------------------------------------
+
+\usepackage{ifthen}
+\newcommand{\Language}[1]{\def\TheLanguage{#1}}
+\newcommand{\DE}[2]{\ifthenelse{\equal{\TheLanguage}{DE}}{#1}{#2}}		% Provide texts in German and English
+
+%---------------------------------------------------------------------------------
+% Layout
+%---------------------------------------------------------------------------------
+
+% Single-sided or double-sided printing
+\newcommand{\SingleSidedPrint}[1]{\def\SingleSided{#1}}
+
+% Font size of the title
+\newcommand{\TitleFontSize}[1]{
+	\ifthenelse{\equal{#1}{large}}{\def\TheTitleFontSize{\fontsize{28pt}{25pt}}}{}
+	\ifthenelse{\equal{#1}{normal}}{\def\TheTitleFontSize{\fontsize{26pt}{23pt}}}{}
+	\ifthenelse{\equal{#1}{small}}{\def\TheTitleFontSize{\fontsize{24pt}{21pt}}}{}
+}
+
+%---------------------------------------------------------------------------------
+% Basic information
+%---------------------------------------------------------------------------------
+
+% Student name, examiners, and date of submission
+\newcommand{\Student}[1]{\def\TheStudent{#1}}
+\newcommand{\Supervisor}[2]{\def\TheSupervisor{#1}\def\SupervisorSex{#2}}
+\newcommand{\SecondExaminer}[2]{\def\TheSecondExaminer{#1}\def\SecondExaminerSex{#2}}
+\newcommand{\SubmittedOn}[1]{\def\DateOfSubmission{#1}}
+
+% Titles, keywords, and abstracts {German}{English}
+\newcommand{\Titles}[2]{\def\TitleDE{#1}\def\TitleEN{#2}\DE{\def\Title{#1}}{\def\Title{#2}}}
+\newcommand{\Keywords}[2]{\def\KeywordsDE{#1}\def\KeywordsEN{#2}}
+\newcommand{\Abstracts}[2]{\def\AbstractDE{#1}\def\AbstractEN{#2}}
+
+%---------------------------------------------------------------------------------
+% Degree course and faculty
+%---------------------------------------------------------------------------------
+
+% Command to check if string is contained in list of strings
+\usepackage{xstring}
+\newcommand\IfStringInList[2]{\IfSubStr{,#2,}{,#1,}}
+
+% Degree course and faculty
+\newcommand{\DegreeCourse}[1]{
+	% Set name of degree program
+	\ifthenelse{\equal{#1}{EuI}}{\def\DegreeName{Bachelor of Science Elektrotechnik und Informationstechnik}}{}
+	\ifthenelse{\equal{#1}{REE}}{\def\DegreeName{Bachelor of Science Regenerative Energiesysteme und Energiemanagement – Elektro- und Informationstechnik}}{}
+	\ifthenelse{\equal{#1}{IE}}{\def\DegreeName{Bachelor of Science Information Engineering}}{}
+	\ifthenelse{\equal{#1}{MT}}{\def\DegreeName{Bachelor of Science Medientechnik}}{}
+	\ifthenelse{\equal{#1}{M-A}}{\def\DegreeName{Master of Science Automatisierung}}{}
+	\ifthenelse{\equal{#1}{M-ICE}}{\def\DegreeName{Master of Science Information and Communications Engineering}}{}
+	\ifthenelse{\equal{#1}{M-MES}}{\def\DegreeName{Master of Science Microelectronic Systems}}{}
+	
+	% Set constant names for Bachelor's and Master's degrees
+	\IfStringInList{#1}{EuI,REE,IE,MT}{
+		\DE{\newcommand{\ThesisKind}{Bachelorarbeit}}{\newcommand{\ThesisKind}{Bachelor's thesis}}
+		\DE{\newcommand{\ExamKind}{Bachelorprüfung}}{\newcommand{\ExamKind}{examination and study regulations}}
+	}{
+		\DE{\newcommand{\ThesisKind}{Masterarbeit}}{\newcommand{\ThesisKind}{Master's thesis}}
+		\DE{\newcommand{\ExamKind}{Masterprüfung}}{\newcommand{\ExamKind}{examination and study regulations}}
+	}
+	
+	% Set faculty
+	\IfStringInList{#1}{EuI,REE,IE,MT,M-A,M-ICE,M-MES}{
+		\def\FacultyDE{Fakultät Elektro-, Medien- und Informationstechnik}
+		\def\FacultyEN{Faculty of Electrical Engineering, Media and Information Technology}
+	}{
+	}
+	
+	% Set source files for titles
+	\ifthenelse{\equal{#1}{M-MES}}{
+		\def\TitleFront{\input{SpecialPages/Title_Front_MES}\cleardoublepage}
+		\def\TitleInside{\input{SpecialPages/Title_Inside_MES}\cleardoublepage}
+	}{
+		\def\TitleFront{\input{SpecialPages/Title_Front}\cleardoublepage}
+		\def\TitleInside{\input{SpecialPages/Title_Inside}\cleardoublepage}
+	}
+}
+
+%---------------------------------------------------------------------------------
+% Flags, print special pages, and files
+%---------------------------------------------------------------------------------
+
+% Flags
+\newcommand{\Confidential}[1]{\def\IsConfidential{#1}}
+\newcommand{\ListOfFigures}[1]{\def\WithListOfFigures{#1}}
+\newcommand{\ListOfTables}[1]{\def\WithListOfTables{#1}}
+\newcommand{\ListOfListings}[1]{\def\WithListOfListings{#1}}
+\newcommand{\ListOfAbbreviations}[1]{\def\WithListOfAbbreviations{#1}}
+
+% Print lists (figures, tables, listings)
+\def\PrintLists{
+	\ifthenelse{\WithListOfFigures=1}{\listoffigures\cleardoublepage}{}
+	\ifthenelse{\WithListOfTables=1}{\listoftables\cleardoublepage}{}
+	\ifthenelse{\WithListOfListings=1}{\lstlistoflistings\cleardoublepage}{}
+	\ifthenelse{\WithListOfAbbreviations=1}{%
+		\DE{\printglossary[type=\acronymtype, title={Abkürzungsverzeichnis}]}%
+		   {\printglossary[type=\acronymtype, title={List of Abbreviations}]}%
+		\cleardoublepage}{}
+}
+
+% Chapter and appendix files
+\newcommand{\Chapters}[1]{\def\TheChapters{#1}}
+\newcommand{\Appendix}[1]{\def\TheAppendix{#1}}

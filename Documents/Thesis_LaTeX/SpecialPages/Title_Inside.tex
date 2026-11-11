@@ -1,0 +1,48 @@
+\title{\Title}   				% Set default title to be used by hyperref in pdf
+\author{\TheStudent}		% Set default author to be used by hyperref in pdf
+
+\newpage
+\thispagestyle{empty}
+
+{
+\hfuzz=20pt					% Suppress warnings ("emty/full boxes")
+\hbadness=10001    	% Suppress underfull warning due to short text
+\fontfamily{phv}\selectfont
+
+% Author and title
+\vspace*{1cm}
+\begin{minipage}[b]{\textwidth}
+	\begin{center}
+		\fontsize{14pt}{20pt}\selectfont
+		\TheStudent \\[1.5cm]
+		\fontsize{18pt}{20pt}\selectfont
+		\Title
+	\end{center}
+\end{minipage}
+
+% Further information (degree course, examiners, date of submission, ...)
+\begin{textblock*}{\textwidth}(40mm,210mm)
+	\begin{minipage}[b]{\textwidth}
+		\fontfamily{cmr}\fontsize{12pt}{14pt}\selectfont
+		\DE
+		{
+			\ThesisKind\ eingereicht im Rahmen der \ExamKind \\	
+			im Studiengang \textit{\DegreeName} \\
+			der \FacultyDE \\
+			der Hochschule für Angewandte Wissenschaften Hamburg\\[1em]
+			\ifthenelse{\equal{\SupervisorSex}{male}}{Betreuender Prüfer:}{Betreuende Prüferin:} \TheSupervisor \\
+			\ifthenelse{\equal{\SecondExaminerSex}{male}}{Zweitgutachter:}{Zweitgutachterin:} \TheSecondExaminer \\[1em]
+			Eingereicht am: \DateOfSubmission \\
+		}
+		{
+			\ThesisKind\ based on the \ExamKind\ of the\\
+			degree program \textit{\DegreeName} \\
+			at the \FacultyEN \\
+			of the University of Applied Sciences Hamburg\\[1em]
+			Supervising examiner: \TheSupervisor \\
+			Second examiner: \TheSecondExaminer \\[1em]
+			Submitted on: \DateOfSubmission \\
+		}
+	\end{minipage}
+\end{textblock*}
+}

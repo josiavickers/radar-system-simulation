@@ -19,7 +19,7 @@ pulse_shape:
   M1Amplitude: 10 
   M1KaiserBeta: 5
 
-  L1DurationTime: 24.999999e-06 
+  L1DurationTime: 25.0e-06 # 24.999999e-06 
   L1Bandwidth: 5000000
   L1Delay: 3937 
   L1Amplitude: 10

@@ -1,20 +1,12 @@
 import numpy as np
 from scipy import signal
 import matplotlib.pyplot as plt
-from load_config import *
-
-def get_if_filter_coeff():
-    return sos
-
-config = load_config("config.yaml")
-tx_sample_freq = config["params"]["tx_sample_freq"]
 
 # ------------------------------------------------------------
 # Filter parameters extracted from LTspice result
 # ------------------------------------------------------------
 ORDER = 10
 FC_HZ = 24.03e6          # -3 dB cutoff frequency
-FS_HZ = tx_sample_freq   # sampling frequency of signal
 
 GAIN_DB = -0.54          # insertion loss
 GAIN = 10**(GAIN_DB / 20)
@@ -22,16 +14,24 @@ GAIN = 10**(GAIN_DB / 20)
 # ------------------------------------------------------------
 # 1. Design the digital filter directly
 # ------------------------------------------------------------
-sos = signal.butter(
-    ORDER,
-    FC_HZ,
-    btype="low",
-    fs=FS_HZ,
-    output="sos"
-)
+def get_if_filter_coeff(fs):
+    '''
+    IF low pass filter designed at the sampling frequency fs of the signal
+    it is applied to.
+    '''
+    sos = signal.butter(
+        ORDER,
+        FC_HZ,
+        btype="low",
+        fs=fs,
+        output="sos"
+    )
 
-# Apply insertion loss
-sos[:, :3] *= GAIN
+    # Apply insertion loss (once, on the first section - scaling every
+    # section would apply it ORDER/2 times)
+    sos[0, :3] *= GAIN
+
+    return sos
 
 # # ------------------------------------------------------------
 # # 2. Model the digital transfer function H(z)

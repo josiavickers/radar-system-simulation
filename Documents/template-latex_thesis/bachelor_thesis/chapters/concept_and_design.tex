@@ -1,4 +1,47 @@
 % Concept and Design
 %
-\chapter{Concept and Design}
+\chapter{Concept and Design}\label{ch:concept_and_design}
+
+This chapter presents the concept and design of the investigative work of this thesis. The previous chapter outlined research direction, requirements, and objectives of the system to be developed. Based on these requirements, this chapter discusses the design of the system preceeding implementation in Chapter~\ref{ch:implementation}. 
+
+The main purpose of the design is to develop a suitable \gls{ac:ssr-x} pulse compression radar simulation and accompanying evaluation framework to facilitate the investigation of power amplifier nonlinearity effects and predistortion to counteract these. As elaborated in the objectives analysis section~\ref{sec:objectives_analysis}, this involves first developing a generic pulse compression radar simulation -- modelling the main components of the real \gls{ac:ssr-x} pulse compression radar system, as well as nonlinear power amplifier and predistorter models. Then, the simulation is tailored to accurately emulate the real system by measurements performed on the physical hardware. The simulation serves as a boilerplate framework to apply and test predistortion algorithms preceeding any implementation on the real system. As such, evaluation criteria are necessary for judgement of the performance of predistortion. The involves numerical comparison predicated on the different \glspl{ac:kpi} mentioned in Chapter~\ref{ch:requirements_analysis}. 
+
+The design of the components of the system are of a modular structure. This means that each component of the pulse compression chain, the power amplifier, and predistorter model are developed independently from each other as modules within the simulation. They all interact together, but can be modified and finetuned separately. As such, observed performance differences between different power amplifier and predistorter models for comparison can be strictly attributed to changes in those modules, not to other simulation conditions. This enables a reliable framework for evaluation.
+
+\section{Overall Approach}
+
+The overall approach of this thesis is to design and implement the \gls{ac:ssr-x} pulse compression radar simulation and use it as a test environment for evaluating the effects of power amplifier nonlinearity and predistortion preceeding hardware implementation. 
+
+WRITE SOME STUFF
+
+The general workflow of this thesis is shown in the following steps:
+
+\begin{enumerate}
+  \item Design and implement a generic \gls{ac:ssr-x} pulse compression radar simulation -- including main components of the pulse compression system, the power amplifier, and predistorter
+  \item Perform measurements on the \gls{ac:ssr-x} pulse compression radar hardware to better understand the behaviour of the real system
+  \item Finetune the simulation using measurement observations and findings for accurate representation of the system
+  \item Apply evaluation criteria to determine the performance improvement by predistortion in simulation
+  \item Apply the simulated predistorter on the \gls{ac:ssr-x} pulse compression radar hardware to confirm real performance improvement
+\end{enumerate}
+
+MAYBE WRITE SOME STUFF
+
+\section{System Architecture}
+
+The system architecture is designed as a modular \gls{ac:ssr-x} pulse compression radar simulation system and evaluation framework. The primary components entail the pulse compression radar system, nonlinear power amplifier, predistorter, and evaluative result logs and plots. 
+
+The simulation and its accompanying evaluative aspects are implemented as a python script.
+
+\subsection{Pulse Compression Radar Chain Design}
+
+The pulse compression radar system serves as the backbone of the entire simulation. It comprises each of the main building blocks of the pulse compression system, namely the transmit chain, channel, and receive chain. Each ot these building blocks consists of further subcomponents. In the transmit chain, the submodules are baseband signal generation and windowing, upconversion to \gls{ac:if} and \gls{ac:rf} respectively, and amplification (using an ideal linear amplifier) for transmission.
+
+\subsection{Power Amplifier Module Design}
+
+The power amplifier module models the nonlinearity effects of the power amplifier chain of the system. It essentially stands as the (nonlinear) amplification module in the transmit chain of the pulse compression radar simulation. Chapter XXX details 
+
+\subsection{Predistorter Module Design}
+
+\section{Evaluation Criteria}
+
 
